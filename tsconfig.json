@@ -1,0 +1,34 @@
+{
+    "exclude": [
+        "tests",
+        "jest.*",
+        "build",
+        "coverage"
+    ],
+    "compilerOptions": {
+        /* Visit https://aka.ms/tsconfig to read more about this file */
+
+        /* Language and Environment */
+        "target": "es5",
+        "lib": [
+            "es6"
+        ],
+        /* Modules */
+        "module": "commonjs",
+        "rootDir": "src/",
+        "resolveJsonModule": true,
+        /* JavaScript Support */
+        "allowJs": true,
+        /* Emit */
+        "declaration": true,
+        "outDir": "build",
+        /* Interop Constraints */
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        /* Type Checking */
+        "strict": true,
+        "noImplicitAny": true,
+        /* Completeness */
+        "skipLibCheck": true
+    }
+}

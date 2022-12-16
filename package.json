@@ -1,0 +1,43 @@
+{
+  "name": "@ssofy/node-sdk",
+  "version": "1.0.0",
+  "description": "Official SSOfy Node.js SDK for instant and efficient API access.",
+  "keywords": [
+    "ssofy",
+    "sso",
+    "login",
+    "auth",
+    "authentication",
+    "oauth",
+    "oauth2",
+    "sdk"
+  ],
+  "license": "MIT",
+  "author": "SSOfy <support@ssofy.com>",
+  "homepage": "https://github.com/ssofy/node-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssofy/node-sdk.git"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "jest --verbose"
+  },
+  "dependencies": {
+    "axios": "^1.2.0",
+    "glob": "^8.0.3"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.3.1",
+    "@types/glob": "^8.0.0",
+    "@types/jest": "^29.2.3",
+    "@types/node": "^18.11.9",
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}
