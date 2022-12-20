@@ -1,6 +1,6 @@
 {
   "name": "@ssofy/node-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official SSOfy Node.js SDK for instant and efficient API access.",
   "keywords": [
     "ssofy",
