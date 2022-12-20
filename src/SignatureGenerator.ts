@@ -29,14 +29,17 @@ export class SignatureGenerator {
         }
     }
 
-    private getValues(obj: any, values: any = []): any {
+    private getValues(obj: any): any {
+        let values = [];
+
         obj = (Object.keys(obj) as Array<keyof typeof obj>)
             .sort().reduce((r: any, k: any) => (r[k] = obj[k], r), {});
 
         for (let key in obj) {
             const value = obj[key];
-            if (value instanceof Array || (typeof value === 'object' && value !== null)) {
-                values = this.getValues(value, values);
+
+            if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
+                values.push(...this.getValues(value));
                 continue;
             }
 
