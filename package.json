@@ -1,6 +1,6 @@
 {
   "name": "@ssofy/node-sdk",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Official SSOfy Node.js SDK for instant and efficient API access.",
   "keywords": [
     "ssofy",
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "author": "SSOfy <support@ssofy.com>",
-  "homepage": "https://github.com/ssofy/node-sdk",
+  "homepage": "https://www.ssofy.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/ssofy/node-sdk.git"
