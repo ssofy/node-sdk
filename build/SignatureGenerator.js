@@ -90,14 +90,14 @@ var SignatureGenerator = /** @class */ (function () {
             });
         });
     };
-    SignatureGenerator.prototype.getValues = function (obj, values) {
-        if (values === void 0) { values = []; }
+    SignatureGenerator.prototype.getValues = function (obj) {
+        var values = [];
         obj = Object.keys(obj)
             .sort().reduce(function (r, k) { return (r[k] = obj[k], r); }, {});
         for (var key in obj) {
             var value = obj[key];
-            if (value instanceof Array || (typeof value === 'object' && value !== null)) {
-                values = this.getValues(value, values);
+            if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
+                values.push.apply(values, this.getValues(value));
                 continue;
             }
             if (typeof value == 'boolean') {
