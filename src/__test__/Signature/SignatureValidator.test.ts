@@ -51,11 +51,12 @@ describe('SignatureValidator Test', () => {
             params: {
                 user: <UserEntity>{
                     id: 'test-user',
+                    hash: 'test-user',
                     display_name: 'test@example.com',
                 },
             },
             signature: Buffer.from(JSON.stringify(<Signature>{
-                hash: '599f54743dde85838520851fc550285bc0d8365bf02c6d2f9a96da635dbd6a72',
+                hash: '2fff5bfa4fc2cf01e6cf7abf5811bd8e2d3c22ffbad55c14c0d918c7fcf4a6f2',
                 salt: 'y4HWL',
             }), 'utf8').toString('base64'),
         },
