@@ -5,7 +5,7 @@
 * First Release
 
 
-## 1.0.1 - 2023-01-19
+## 1.1.0 - 2023-01-19
 
 * Added OTPOptionEntity model
 * Added the missed "hash" property to UserEntity model
