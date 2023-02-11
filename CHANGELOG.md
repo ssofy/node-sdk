@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.4 - 2023-02-11
+
+* Added UserEntity missing properties
+
 ## 1.1.3 - 2023-02-04
 
 * Added OTPOptionEntity missing properties
