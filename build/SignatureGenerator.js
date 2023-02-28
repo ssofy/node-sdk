@@ -62,30 +62,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignatureGenerator = void 0;
 var crypto = __importStar(require("crypto"));
 var SignatureGenerator = /** @class */ (function () {
-    function SignatureGenerator(config) {
-        this.key = config.key;
-        this.secret = config.secret;
+    function SignatureGenerator() {
     }
-    SignatureGenerator.prototype.generate = function (url, params, salt) {
+    SignatureGenerator.prototype.generate = function (url, params, secret, salt) {
         return __awaiter(this, void 0, void 0, function () {
-            var path, toSign, hash, e_1;
+            var path, toSign, hash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
                         path = (new URL(url)).pathname;
-                        toSign = path + this.getValues(params).join('') + this.key + this.secret + (salt || '');
-                        return [4 /*yield*/, this.sha256(toSign)];
+                        toSign = path + this.getValues(params).join('') + (salt || '');
+                        return [4 /*yield*/, this.hmac(toSign, secret)];
                     case 1:
                         hash = _a.sent();
                         return [2 /*return*/, {
                                 hash: hash,
                                 salt: salt
                             }];
-                    case 2:
-                        e_1 = _a.sent();
-                        return [2 /*return*/, {}];
-                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -108,17 +101,17 @@ var SignatureGenerator = /** @class */ (function () {
         }
         return values;
     };
-    SignatureGenerator.prototype.sha256 = function (message) {
+    SignatureGenerator.prototype.hmac = function (message, secret) {
         return __awaiter(this, void 0, void 0, function () {
-            var msgBuffer, hashBuffer, hashArray;
+            var msgBuffer, hmacBuffer, hashArray;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         msgBuffer = new TextEncoder().encode(message);
-                        return [4 /*yield*/, crypto.subtle.digest('SHA-256', msgBuffer)];
+                        return [4 /*yield*/, crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: { name: 'SHA-256' } }, false, ['sign']).then(function (key) { return crypto.subtle.sign('HMAC', key, msgBuffer); })];
                     case 1:
-                        hashBuffer = _a.sent();
-                        hashArray = Array.from(new Uint8Array(hashBuffer));
+                        hmacBuffer = _a.sent();
+                        hashArray = Array.from(new Uint8Array(hmacBuffer));
                         return [2 /*return*/, hashArray.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('')];
                 }
             });

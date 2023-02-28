@@ -78,7 +78,7 @@ var Client = /** @class */ (function () {
         else {
             this.cache = config.cacheStore;
         }
-        this.signatureGenerator = new SignatureGenerator_1.SignatureGenerator(config);
+        this.signatureGenerator = new SignatureGenerator_1.SignatureGenerator();
     }
     Client.prototype.verifyAuthentication = function (token) {
         return __awaiter(this, void 0, void 0, function () {
@@ -247,7 +247,7 @@ var Client = /** @class */ (function () {
                         salt = Math.random().toString(36).substring(2, saltLength + 2);
                         _b = (_a = Buffer).from;
                         _d = (_c = JSON).stringify;
-                        return [4 /*yield*/, this.signatureGenerator.generate(url.href, fields, salt)];
+                        return [4 /*yield*/, this.signatureGenerator.generate(url.href, fields, this.config.secret, salt)];
                     case 1:
                         signature = _b.apply(_a, [_d.apply(_c, [_e.sent()]),
                             'utf8']).toString('base64');

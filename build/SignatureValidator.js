@@ -40,7 +40,8 @@ exports.SignatureValidator = void 0;
 var _1 = require(".");
 var SignatureValidator = /** @class */ (function () {
     function SignatureValidator(config) {
-        this.signatureGenerator = new _1.SignatureGenerator(config);
+        this.config = config;
+        this.signatureGenerator = new _1.SignatureGenerator();
     }
     SignatureValidator.prototype.verifyBase64Signature = function (url, params, signature) {
         return __awaiter(this, void 0, void 0, function () {
@@ -50,7 +51,7 @@ var SignatureValidator = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         decodedSignature = (JSON.parse(Buffer.from(signature, 'base64').toString('utf8')));
-                        return [4 /*yield*/, this.signatureGenerator.generate(url, params, decodedSignature.salt)];
+                        return [4 /*yield*/, this.signatureGenerator.generate(url, params, this.config.secret, decodedSignature.salt)];
                     case 1:
                         generatedSignature = _a.sent();
                         return [2 /*return*/, generatedSignature.hash === decodedSignature.hash];
