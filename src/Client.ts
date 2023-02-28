@@ -8,7 +8,7 @@ import {SignatureVerificationError} from "./Errors/SignatureVerificationError";
 import {APIError} from "./Errors/APIError";
 import {Token} from "./Models/Token";
 import {APIResponse} from "./Models/APIResponse";
-import {UserEntity} from "./Models/UserEntity";
+import {UserEntity} from "./Models/Entities/UserEntity";
 import {SignatureValidator} from "./SignatureValidator";
 
 export class Client {

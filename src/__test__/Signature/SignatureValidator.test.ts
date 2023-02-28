@@ -1,9 +1,9 @@
-import {ClientEntity} from "../../Models/ClientEntity";
-import {ScopeEntity} from "../../Models/ScopeEntity";
-import {UserEntity} from "../../Models/UserEntity";
 import {SignatureValidator} from "../../SignatureValidator";
 import {ClientConfig} from "../../ClientConfig";
 import {Signature} from "../../Models/Signature";
+import {ClientEntity} from "../../Models/Entities/ClientEntity";
+import {ScopeEntity} from "../../Models/Entities/ScopeEntity";
+import {UserEntity} from "../../Models/Entities/UserEntity";
 
 describe('SignatureValidator Test', () => {
     const validator = new SignatureValidator(<ClientConfig>{
