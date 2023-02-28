@@ -1,32 +1,18 @@
 import {Signature} from "./Models/Signature";
 import * as crypto from "crypto";
-import {ClientConfig} from "./ClientConfig";
 
 export class SignatureGenerator {
-    private readonly key: string;
-    private readonly secret: string;
+    async generate(url: string, params: any, secret: string, salt?: string): Promise<Signature> {
+        const path = (new URL(url)).pathname;
 
-    constructor(config: ClientConfig) {
-        this.key = config.key;
-        this.secret = config.secret;
-    }
+        const toSign = path + this.getValues(params).join('') + (salt || '');
 
-    async generate(url: string, params: any, salt?: string): Promise<Signature> {
-        try {
-            const path = (new URL(url)).pathname;
+        const hash = await this.hmac(toSign, secret);
 
-            const toSign = path + this.getValues(params).join('') + this.key + this.secret + (salt || '');
-
-            const hash = await this.sha256(toSign);
-
-            return <Signature>{
-                hash: hash,
-                salt: salt
-            };
-
-        } catch (e) {
-            return <Signature>{};
-        }
+        return <Signature>{
+            hash: hash,
+            salt: salt
+        };
     }
 
     private getValues(obj: any): any {
@@ -54,11 +40,17 @@ export class SignatureGenerator {
         return values;
     }
 
-    private async sha256(message: string) {
+    private async hmac(message: string, secret: string) {
         const msgBuffer = new TextEncoder().encode(message);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hmacBuffer = await crypto.subtle.importKey(
+            'raw',
+            new TextEncoder().encode(secret),
+            {name: 'HMAC', hash: {name: 'SHA-256'}},
+            false,
+            ['sign']
+        ).then(key => crypto.subtle.sign('HMAC', key, msgBuffer));
 
+        const hashArray = Array.from(new Uint8Array(hmacBuffer));
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 }

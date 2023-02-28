@@ -30,7 +30,7 @@ export class Client {
             this.cache = config.cacheStore;
         }
 
-        this.signatureGenerator = new SignatureGenerator(config);
+        this.signatureGenerator = new SignatureGenerator();
     }
 
     async verifyAuthentication(token: string): Promise<APIResponse> {
@@ -140,7 +140,7 @@ export class Client {
         const salt = Math.random().toString(36).substring(2, saltLength + 2);
 
         const signature = Buffer.from(
-            JSON.stringify(await this.signatureGenerator.generate(url.href, fields, salt)),
+            JSON.stringify(await this.signatureGenerator.generate(url.href, fields, this.config.secret, salt)),
             'utf8'
         ).toString('base64');
 

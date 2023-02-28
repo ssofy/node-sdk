@@ -23,7 +23,7 @@ describe('SignatureValidator Test', () => {
                 },
             },
             signature: Buffer.from(JSON.stringify(<Signature>{
-                hash: 'c6f9f6eb5868af271bcaae915a515bbefb5e46f4e87a41596270b357b5627f64',
+                hash: 'e3a375e05b73cb7ceede92e1b43f8369015375dc4a20f6ccc89b880740f75328',
                 salt: 'Py2BZIGgY',
             }), 'utf8').toString('base64'),
         },
@@ -42,7 +42,7 @@ describe('SignatureValidator Test', () => {
                 ],
             },
             signature: Buffer.from(JSON.stringify(<Signature>{
-                hash: 'c0100920478966fbd8650b10e98ad552a2787a97b51ff77bf4339daa218ddc90',
+                hash: '9b3084c44f162dee2349c8682e8ba5b94f141a8ceb9bdce4cf82e5eab845c635',
                 salt: 'qHzBkp',
             }), 'utf8').toString('base64'),
         },
@@ -56,7 +56,7 @@ describe('SignatureValidator Test', () => {
                 },
             },
             signature: Buffer.from(JSON.stringify(<Signature>{
-                hash: '2fff5bfa4fc2cf01e6cf7abf5811bd8e2d3c22ffbad55c14c0d918c7fcf4a6f2',
+                hash: '2128e658770e9e5292f01a0dd52e766cd48c143240a10671a9cca83a60e3d204',
                 salt: 'y4HWL',
             }), 'utf8').toString('base64'),
         },
