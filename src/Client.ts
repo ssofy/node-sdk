@@ -55,7 +55,7 @@ export class Client {
     }
 
     async findUserById(id: string, cache: boolean = false): Promise<APIResponse> {
-        const path = `v1/entities/users/find`;
+        const path = `v1/resources/users/find`;
 
         const response = await this.requestAndCache(path, undefined, {
             id: id,

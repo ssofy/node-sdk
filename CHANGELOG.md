@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.6 - 2023-03-19
+
+* Switched to the new User Resource endpoint
+
 ## 1.1.5 - 2023-02-28
 
 * Compliance with Draft 1.30 signature style
