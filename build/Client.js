@@ -123,7 +123,7 @@ var Client = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        path = "v1/entities/users/find";
+                        path = "v1/resources/users/find";
                         return [4 /*yield*/, this.requestAndCache(path, undefined, {
                                 id: id,
                             }, cache)];
