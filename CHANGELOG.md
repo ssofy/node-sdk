@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.8 - 2023-06-01
+
+* Added the missing `username` property in UserEntity
+
 ## 1.1.7 - 2023-05-29
 
 * Added the missing UserEntity properties
