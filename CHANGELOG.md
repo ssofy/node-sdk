@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.0 - 2023-06-08
+
+* Renamed the `Client` to `APIClient` and `ClientConfig` to `APIConfig` for readability.
+* Fixed the token cache invalidation issue.
+
 ## 1.1.8 - 2023-06-01
 
 * Added the missing `username` property in UserEntity
