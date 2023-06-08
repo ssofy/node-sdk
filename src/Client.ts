@@ -67,8 +67,8 @@ export class Client {
     }
 
     async invalidateTokenCache(token: string): Promise<void> {
-        await this.cache.delete(`v1/authenticated/verify:${token}`);
-        await this.cache.delete(`v1/authenticated/user:${token}`);
+        await this.cache.delete(`request:v1/authenticated/verify:${token}`);
+        await this.cache.delete(`request:v1/authenticated/user:${token}`);
     }
 
     async purgeTokenCache(): Promise<void> {
