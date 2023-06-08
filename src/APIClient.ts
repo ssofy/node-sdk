@@ -1,5 +1,5 @@
 import axios, {AxiosError} from 'axios';
-import {ClientConfig} from "./ClientConfig";
+import {APIConfig} from "./APIConfig";
 import {Storage} from "./Storage/Storage";
 import {NullStorage} from "./Storage/NullStorage";
 import {InvalidTokenError} from "./Errors/InvalidTokenError";
@@ -11,14 +11,14 @@ import {APIResponse} from "./Models/APIResponse";
 import {UserEntity} from "./Models/Entities/UserEntity";
 import {SignatureValidator} from "./SignatureValidator";
 
-export class Client {
-    private config: ClientConfig;
+export class APIClient {
+    private config: APIConfig;
 
     private readonly cache: Storage;
 
     private readonly signatureGenerator: SignatureGenerator;
 
-    constructor(config: ClientConfig) {
+    constructor(config: APIConfig) {
         this.config = config;
 
         this.config.cacheTtl = config.cacheTtl || 60 * 60 * 3;

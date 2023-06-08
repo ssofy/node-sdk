@@ -1,12 +1,12 @@
 import {SignatureValidator} from "../../SignatureValidator";
-import {ClientConfig} from "../../ClientConfig";
+import {APIConfig} from "../../APIConfig";
 import {Signature} from "../../Models/Signature";
 import {ClientEntity} from "../../Models/Entities/ClientEntity";
 import {ScopeEntity} from "../../Models/Entities/ScopeEntity";
 import {UserEntity} from "../../Models/Entities/UserEntity";
 
 describe('SignatureValidator Test', () => {
-    const validator = new SignatureValidator(<ClientConfig>{
+    const validator = new SignatureValidator(<APIConfig>{
         'key': 'cf47d697-cc0b-4262-8329-78a0995e6fd0',
         'secret': 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K',
     });

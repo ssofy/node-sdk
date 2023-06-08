@@ -1,5 +1,5 @@
-export {ClientConfig} from "./ClientConfig";
-export {Client} from "./Client";
+export {APIConfig} from "./APIConfig";
+export {APIClient} from "./APIClient";
 export {SignatureGenerator} from "./SignatureGenerator";
 export {SignatureValidator} from "./SignatureValidator";
 export {FileStorage} from "./Storage/FileStorage";

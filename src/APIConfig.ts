@@ -1,6 +1,6 @@
 import {Storage} from "./Storage/Storage";
 
-export interface ClientConfig {
+export interface APIConfig {
     domain: string
     key: string
     secret: string

@@ -1,11 +1,11 @@
-import {ClientConfig, SignatureGenerator} from ".";
+import {APIConfig, SignatureGenerator} from ".";
 import {Signature} from "./Models/Signature";
 
 export class SignatureValidator {
-    private config: ClientConfig;
+    private config: APIConfig;
     private signatureGenerator: SignatureGenerator;
 
-    constructor(config: ClientConfig) {
+    constructor(config: APIConfig) {
         this.config = config;
         this.signatureGenerator = new SignatureGenerator();
     }
