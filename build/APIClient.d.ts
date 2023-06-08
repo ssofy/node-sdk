@@ -1,10 +1,10 @@
-import { ClientConfig } from "./ClientConfig";
+import { APIConfig } from "./APIConfig";
 import { APIResponse } from "./Models/APIResponse";
-export declare class Client {
+export declare class APIClient {
     private config;
     private readonly cache;
     private readonly signatureGenerator;
-    constructor(config: ClientConfig);
+    constructor(config: APIConfig);
     verifyAuthentication(token: string): Promise<APIResponse>;
     authenticatedUser(token: string, cache?: boolean): Promise<APIResponse>;
     findUserById(id: string, cache?: boolean): Promise<APIResponse>;

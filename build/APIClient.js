@@ -59,7 +59,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Client = void 0;
+exports.APIClient = void 0;
 var axios_1 = __importStar(require("axios"));
 var NullStorage_1 = require("./Storage/NullStorage");
 var InvalidTokenError_1 = require("./Errors/InvalidTokenError");
@@ -67,8 +67,8 @@ var SignatureGenerator_1 = require("./SignatureGenerator");
 var SignatureVerificationError_1 = require("./Errors/SignatureVerificationError");
 var APIError_1 = require("./Errors/APIError");
 var SignatureValidator_1 = require("./SignatureValidator");
-var Client = /** @class */ (function () {
-    function Client(config) {
+var APIClient = /** @class */ (function () {
+    function APIClient(config) {
         this.config = config;
         this.config.cacheTtl = config.cacheTtl || 60 * 60 * 3;
         this.config.secure = config.secure || false;
@@ -80,7 +80,7 @@ var Client = /** @class */ (function () {
         }
         this.signatureGenerator = new SignatureGenerator_1.SignatureGenerator();
     }
-    Client.prototype.verifyAuthentication = function (token) {
+    APIClient.prototype.verifyAuthentication = function (token) {
         return __awaiter(this, void 0, void 0, function () {
             var path, response;
             return __generator(this, function (_a) {
@@ -97,7 +97,7 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.authenticatedUser = function (token, cache) {
+    APIClient.prototype.authenticatedUser = function (token, cache) {
         if (cache === void 0) { cache = false; }
         return __awaiter(this, void 0, void 0, function () {
             var path, response;
@@ -116,7 +116,7 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.findUserById = function (id, cache) {
+    APIClient.prototype.findUserById = function (id, cache) {
         if (cache === void 0) { cache = false; }
         return __awaiter(this, void 0, void 0, function () {
             var path, response;
@@ -136,14 +136,14 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.invalidateTokenCache = function (token) {
+    APIClient.prototype.invalidateTokenCache = function (token) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.cache.delete("v1/authenticated/verify:".concat(token))];
+                    case 0: return [4 /*yield*/, this.cache.delete("request:v1/authenticated/verify:".concat(token))];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.cache.delete("v1/authenticated/user:".concat(token))];
+                        return [4 /*yield*/, this.cache.delete("request:v1/authenticated/user:".concat(token))];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
@@ -151,7 +151,7 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.purgeTokenCache = function () {
+    APIClient.prototype.purgeTokenCache = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -163,7 +163,7 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.requestAndCache = function (path, token, fields, cache) {
+    APIClient.prototype.requestAndCache = function (path, token, fields, cache) {
         if (fields === void 0) { fields = {}; }
         if (cache === void 0) { cache = true; }
         return __awaiter(this, void 0, void 0, function () {
@@ -232,7 +232,7 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.request = function (path, fields, post) {
+    APIClient.prototype.request = function (path, fields, post) {
         if (path === void 0) { path = '/'; }
         if (fields === void 0) { fields = {}; }
         if (post === void 0) { post = false; }
@@ -289,17 +289,17 @@ var Client = /** @class */ (function () {
             });
         });
     };
-    Client.prototype.sanitizeToken = function (token) {
+    APIClient.prototype.sanitizeToken = function (token) {
         var arr = token.split(' ');
         return arr[arr.length - 1];
     };
-    Client.prototype.forceCast = function (input) {
+    APIClient.prototype.forceCast = function (input) {
         if (input.expires_at) {
             input.expires_at = new Date(input.expires_at);
         }
         // @ts-ignore
         return input;
     };
-    return Client;
+    return APIClient;
 }());
-exports.Client = Client;
+exports.APIClient = APIClient;

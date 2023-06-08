@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullStorage = exports.FileStorage = exports.SignatureValidator = exports.SignatureGenerator = exports.Client = void 0;
-var Client_1 = require("./Client");
-Object.defineProperty(exports, "Client", { enumerable: true, get: function () { return Client_1.Client; } });
+exports.NullStorage = exports.FileStorage = exports.SignatureValidator = exports.SignatureGenerator = exports.APIClient = void 0;
+var APIClient_1 = require("./APIClient");
+Object.defineProperty(exports, "APIClient", { enumerable: true, get: function () { return APIClient_1.APIClient; } });
 var SignatureGenerator_1 = require("./SignatureGenerator");
 Object.defineProperty(exports, "SignatureGenerator", { enumerable: true, get: function () { return SignatureGenerator_1.SignatureGenerator; } });
 var SignatureValidator_1 = require("./SignatureValidator");
