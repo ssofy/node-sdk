@@ -4,5 +4,5 @@ export interface ScopeRepository {
     /**
      * Get list of available OAuth2 Scopes.
      */
-    all(lang: string): ScopeEntity[];
+    all(lang: string): Promise<ScopeEntity[]>;
 }
