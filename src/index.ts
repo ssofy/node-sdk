@@ -14,3 +14,7 @@ export {ClientEntity} from "./Models/Entities/ClientEntity";
 export {OTPOptionEntity} from "./Models/Entities/OTPOptionEntity";
 export {ScopeEntity} from "./Models/Entities/ScopeEntity";
 export {UserEntity} from "./Models/Entities/UserEntity";
+export {ClientRepository} from "./Repositories/ClientRepository";
+export {OTPRepository} from "./Repositories/OTPRepository";
+export {ScopeRepository} from "./Repositories/ScopeRepository";
+export {UserRepository} from "./Repositories/UserRepository";
