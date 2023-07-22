@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.1 - 2023-07-22
+
+* Repository interfaces have been added useful to resource server integrations. 
+
 ## 2.0.0 - 2023-06-08
 
 * Renamed the `Client` to `APIClient` and `ClientConfig` to `APIConfig` for readability.
