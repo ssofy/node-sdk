@@ -1,10 +1,8 @@
-import {Storage} from "./Storage/Storage";
+import {APIConfig as BaseAPIConfig} from "./APIClient/APIConfig";
+import {APIConfigParameters} from "./APIClient/APIConfigParameters";
 
-export interface APIConfig {
-    domain: string
-    key: string
-    secret: string
-    cacheStore?: Storage
-    cacheTtl?: number
-    secure?: boolean
+export class APIConfig extends BaseAPIConfig {
+    constructor(config: APIConfigParameters) {
+        super(config);
+    }
 }
