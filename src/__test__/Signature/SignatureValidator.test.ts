@@ -1,15 +1,15 @@
-import {SignatureValidator} from "../../SignatureValidator";
-import {APIConfig} from "../../APIConfig";
+import {SignatureVerifier} from "../../SignatureVerifier";
 import {Signature} from "../../Models/Signature";
 import {ClientEntity} from "../../Models/Entities/ClientEntity";
 import {ScopeEntity} from "../../Models/Entities/ScopeEntity";
 import {UserEntity} from "../../Models/Entities/UserEntity";
+import {SignatureGenerator} from "../../SignatureGenerator";
 
 describe('SignatureValidator Test', () => {
-    const validator = new SignatureValidator(<APIConfig>{
-        'key': 'cf47d697-cc0b-4262-8329-78a0995e6fd0',
-        'secret': 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K',
-    });
+    const secret = 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K';
+
+    const generator = new SignatureGenerator();
+    const validator = new SignatureVerifier(generator);
 
     const cases = [
         {
@@ -63,7 +63,7 @@ describe('SignatureValidator Test', () => {
     ];
 
     test.each(cases)('Signature must match $signature', async (testCase: any) => {
-        const ok = await validator.verifyBase64Signature(testCase.url, testCase.params, testCase.signature);
+        const ok = await validator.verifyBase64Signature(testCase.url, testCase.params, secret, testCase.signature);
         return expect(ok).toBeTruthy();
     });
 });

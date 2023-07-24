@@ -2,14 +2,16 @@ import {APIClient} from "../../APIClient";
 import {APIConfig} from "../../APIConfig";
 
 describe('Client Test', () => {
-    const client = new APIClient(<APIConfig>{
-            'domain' : 'test.api.ssofy.local',
-            'key'    : 'cf47d697-cc0b-4262-8329-78a0995e6fd0',
-            'secret' : 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K',
-            'cache'  : null,
-            'ttl'    : 3,
-            'secure' : false,
+    const config = new APIConfig(<APIConfig>{
+        'domain' : 'test.api.ssofy.local',
+        'key'    : 'cf47d697-cc0b-4262-8329-78a0995e6fd0',
+        'secret' : 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K',
+        'cache'  : null,
+        'ttl'    : 3,
+        'secure' : false,
     });
+
+    const client = new APIClient(config);
 
     test('token verification', async () => {
         jest.setTimeout(30000);
