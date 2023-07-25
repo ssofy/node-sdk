@@ -1,7 +1,9 @@
 export { APIConfig } from "./APIConfig";
 export { APIClient } from "./APIClient";
+export { OAuth2Config } from "./OAuth2Config";
+export { OAuth2Client } from "./OAuth2Client";
 export { SignatureGenerator } from "./SignatureGenerator";
-export { SignatureValidator } from "./SignatureValidator";
+export { SignatureVerifier } from "./SignatureVerifier";
 export { FileStorage } from "./Storage/FileStorage";
 export { Storage } from "./Storage/Storage";
 export { NullStorage } from "./Storage/NullStorage";

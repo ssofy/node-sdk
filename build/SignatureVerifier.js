@@ -36,14 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignatureValidator = void 0;
-var _1 = require(".");
-var SignatureValidator = /** @class */ (function () {
-    function SignatureValidator(config) {
-        this.config = config;
-        this.signatureGenerator = new _1.SignatureGenerator();
+exports.SignatureVerifier = void 0;
+var SignatureVerifier = /** @class */ (function () {
+    function SignatureVerifier(generator) {
+        this.signatureGenerator = generator;
     }
-    SignatureValidator.prototype.verifyBase64Signature = function (url, params, signature) {
+    SignatureVerifier.prototype.verifyBase64Signature = function (url, params, secret, signature) {
         return __awaiter(this, void 0, void 0, function () {
             var decodedSignature, generatedSignature, e_1;
             return __generator(this, function (_a) {
@@ -51,7 +49,7 @@ var SignatureValidator = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         decodedSignature = (JSON.parse(Buffer.from(signature, 'base64').toString('utf8')));
-                        return [4 /*yield*/, this.signatureGenerator.generate(url, params, this.config.secret, decodedSignature.salt)];
+                        return [4 /*yield*/, this.signatureGenerator.generate(url, params, secret, decodedSignature.salt)];
                     case 1:
                         generatedSignature = _a.sent();
                         return [2 /*return*/, generatedSignature.hash === decodedSignature.hash];
@@ -63,6 +61,6 @@ var SignatureValidator = /** @class */ (function () {
             });
         });
     };
-    return SignatureValidator;
+    return SignatureVerifier;
 }());
-exports.SignatureValidator = SignatureValidator;
+exports.SignatureVerifier = SignatureVerifier;

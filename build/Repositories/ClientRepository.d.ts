@@ -3,5 +3,5 @@ export interface ClientRepository {
     /**
      * Get OAuth2 Client by id.
      */
-    findById(id: string): ClientEntity;
+    findById(id: string): Promise<ClientEntity>;
 }

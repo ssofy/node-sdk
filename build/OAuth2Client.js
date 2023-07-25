@@ -15,13 +15,13 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.APIClient = void 0;
-var APIClient_1 = require("./APIClient/APIClient");
-var APIClient = /** @class */ (function (_super) {
-    __extends(APIClient, _super);
-    function APIClient(config) {
+exports.OAuth2Client = void 0;
+var OAuth2Client_1 = require("./OAuth2Client/OAuth2Client");
+var OAuth2Client = /** @class */ (function (_super) {
+    __extends(OAuth2Client, _super);
+    function OAuth2Client(config) {
         return _super.call(this, config) || this;
     }
-    return APIClient;
-}(APIClient_1.APIClient));
-exports.APIClient = APIClient;
+    return OAuth2Client;
+}(OAuth2Client_1.OAuth2Client));
+exports.OAuth2Client = OAuth2Client;
