@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.0 - 2023-07-25
+
+* **New:** OAuth2Client and OAuth2Config.
+* Deprecated the old SignatureValidator and APIConfig dependency for SignatureVerifier.
+* Changed the return types in repositories to promise.
+
 ## 2.0.1 - 2023-07-22
 
 * Repository interfaces have been added useful to resource server integrations. 
