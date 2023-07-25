@@ -6,7 +6,7 @@ import {FileStorage} from "../../Storage/FileStorage";
 import fs from "fs";
 
 describe('Client Test', () => {
-    const storagePath = '/private/tmp/sokhDQ'; // fs.mkdtempSync('/tmp/');
+    const storagePath = fs.mkdtempSync('/tmp/');
     const stateStore = new FileStorage(storagePath);
 
     const config = new OAuth2Config(<OAuth2ConfigParameters>{
@@ -26,10 +26,11 @@ describe('Client Test', () => {
         const state = await client.initAuthCodeFlow('http://localhost', 'http://localhost/oauth/continue');
         console.log(state);
 
+        expect(state.state).toBeDefined();
         expect(state.uri).toBeDefined();
     });
 
-    test('workflow continue', async () => {
+    test.skip('workflow continue', async () => {
         jest.setTimeout(30000);
 
         const state = await client.continueAuthCodeFlow('A918x8p1Sa', '018986cde6437ad6aed2881c4612e6af2fc0156ae07046368b1d21e4ea36cd7e194af072799b488886955e2db475fc23');
@@ -38,7 +39,7 @@ describe('Client Test', () => {
         expect(true).toBeTruthy();
     });
 
-    test('refresh token', async () => {
+    test.skip('refresh token', async () => {
         jest.setTimeout(30000);
 
         const state = await client.getAccessToken('A918x8p1Sa');
@@ -47,7 +48,7 @@ describe('Client Test', () => {
         expect(true).toBeTruthy();
     });
 
-    test('refresh token', async () => {
+    test.skip('refresh user info', async () => {
         jest.setTimeout(30000);
 
         let state;

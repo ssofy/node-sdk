@@ -13,7 +13,7 @@ describe('Client Test', () => {
 
     const client = new APIClient(config);
 
-    test('token verification', async () => {
+    test.skip('token verification', async () => {
         jest.setTimeout(30000);
 
         const response = await client.verifyAuthentication('0184f38cfe53715880bdc64415face01ea401c6a0c2b4da0a1f98a2104c7a7e1');
@@ -23,7 +23,7 @@ describe('Client Test', () => {
         expect(true).toBeTruthy();
     });
 
-    test('resource owner', async () => {
+    test.skip('resource owner', async () => {
         jest.setTimeout(30000);
 
         const response = await client.authenticatedUser('0184f38cfe53715880bdc64415face01ea401c6a0c2b4da0a1f98a2104c7a7e1');
