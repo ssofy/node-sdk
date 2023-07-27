@@ -1,5 +1,4 @@
 import {OAuth2Config} from "../../OAuth2Config";
-import {OAuth2ConfigParameters} from "../../OAuth2Client/OAuth2ConfigParameters";
 import {OAuth2Client} from "../../OAuth2Client";
 import {Storage} from "../../Storage/Storage";
 import {FileStorage} from "../../Storage/FileStorage";
@@ -9,7 +8,7 @@ describe('Client Test', () => {
     const storagePath = fs.mkdtempSync('/tmp/');
     const stateStore = new FileStorage(storagePath);
 
-    const config = new OAuth2Config(<OAuth2ConfigParameters>{
+    const config = new OAuth2Config({
         url: 'http://sandbox.us.ssofy.local',
         clientId: 'sandbox',
         clientSecret: 'sandbox',

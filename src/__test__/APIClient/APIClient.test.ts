@@ -2,12 +2,10 @@ import {APIClient} from "../../APIClient";
 import {APIConfig} from "../../APIConfig";
 
 describe('Client Test', () => {
-    const config = new APIConfig(<APIConfig>{
+    const config = new APIConfig({
         'domain' : 'test.api.ssofy.local',
         'key'    : 'cf47d697-cc0b-4262-8329-78a0995e6fd0',
         'secret' : 'lXp2rNYg8ht75l2l1vxNGNz2PWzZ7h6K',
-        'cache'  : null,
-        'ttl'    : 3,
         'secure' : false,
     });
 
