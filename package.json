@@ -1,6 +1,6 @@
 {
   "name": "@ssofy/node-sdk",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Official SSOfy Node.js SDK for instant and efficient API access.",
   "keywords": [
     "ssofy",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@openid/appauth": "^1.3.1",
+    "@ssofy/javascript-sdk": "^1.0.1",
     "axios": "^1.2.0",
     "glob": "^8.0.3"
   },

@@ -1,6 +1,5 @@
 import {APIConfigParameters} from "./APIConfigParameters";
-import {Storage} from "../Storage/Storage";
-import {NullStorage} from "../Storage/NullStorage";
+import {Storage, NullStorage} from "@ssofy/javascript-sdk";
 
 export class APIConfig implements APIConfigParameters {
     // @ts-ignore
