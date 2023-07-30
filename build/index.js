@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullStorage = exports.FileStorage = exports.SignatureVerifier = exports.SignatureGenerator = exports.OAuth2Client = exports.OAuth2Config = exports.APIClient = exports.APIConfig = void 0;
+exports.SignatureVerifier = exports.SignatureGenerator = exports.OAuth2Client = exports.OAuth2Config = exports.APIClient = exports.APIConfig = void 0;
 var APIConfig_1 = require("./APIConfig");
 Object.defineProperty(exports, "APIConfig", { enumerable: true, get: function () { return APIConfig_1.APIConfig; } });
 var APIClient_1 = require("./APIClient");
@@ -13,7 +13,3 @@ var SignatureGenerator_1 = require("./SignatureGenerator");
 Object.defineProperty(exports, "SignatureGenerator", { enumerable: true, get: function () { return SignatureGenerator_1.SignatureGenerator; } });
 var SignatureVerifier_1 = require("./SignatureVerifier");
 Object.defineProperty(exports, "SignatureVerifier", { enumerable: true, get: function () { return SignatureVerifier_1.SignatureVerifier; } });
-var FileStorage_1 = require("./Storage/FileStorage");
-Object.defineProperty(exports, "FileStorage", { enumerable: true, get: function () { return FileStorage_1.FileStorage; } });
-var NullStorage_1 = require("./Storage/NullStorage");
-Object.defineProperty(exports, "NullStorage", { enumerable: true, get: function () { return NullStorage_1.NullStorage; } });

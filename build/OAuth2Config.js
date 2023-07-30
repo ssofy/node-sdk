@@ -16,12 +16,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OAuth2Config = void 0;
-var OAuth2Config_1 = require("./OAuth2Client/OAuth2Config");
+var javascript_sdk_1 = require("@ssofy/javascript-sdk");
 var OAuth2Config = /** @class */ (function (_super) {
     __extends(OAuth2Config, _super);
     function OAuth2Config(params) {
         return _super.call(this, params) || this;
     }
     return OAuth2Config;
-}(OAuth2Config_1.OAuth2Config));
+}(javascript_sdk_1.OAuth2Config));
 exports.OAuth2Config = OAuth2Config;

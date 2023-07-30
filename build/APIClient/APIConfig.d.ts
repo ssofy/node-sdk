@@ -1,5 +1,5 @@
 import { APIConfigParameters } from "./APIConfigParameters";
-import { Storage } from "../Storage/Storage";
+import { Storage } from "@ssofy/javascript-sdk";
 export declare class APIConfig implements APIConfigParameters {
     domain: string;
     key: string;

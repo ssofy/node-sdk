@@ -1,4 +1,4 @@
-import { Storage } from "../Storage/Storage";
+import { Storage } from "@ssofy/javascript-sdk";
 export interface APIConfigParameters {
     domain: string;
     key: string;
