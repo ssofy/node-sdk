@@ -2,11 +2,9 @@ SSOfy Node.js SDK
 =============
 #### Official [SSOfy](https://www.ssofy.com) Node.js SDK for instant and efficient API access.
 
-Read the full [documentation](https://www.ssofy.com/docs/SDK/NodeJs/Installation/) at SSOfy Academy.
+Read the full [documentation](https://www.ssofy.com/docs/SDK/NodeJs/Installation/) at SSOfy Knowledge Base.
 
-<p align="center">
-  <img src="docs/img/sequence.png"/>
-</p>
+<img src="docs/img/logo.png"/>
 
 ### Installing via NPM
 
@@ -27,9 +25,6 @@ Our technical experts are available around the clock to conduct investigations a
 the highest quality product and service support as quickly as possible.
 
 ## Author
-
-![ssofy-light.png](docs/img/ssofy-light.png#gh-light-mode-only)
-![ssofy-dark.png](docs/img/ssofy-dark.png#gh-dark-mode-only)
 
 SSOfy and derivatives are by [Cubelet Ltd](https://cubelet.co.uk).
 
