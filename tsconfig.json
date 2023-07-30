@@ -3,7 +3,8 @@
         "tests",
         "jest.*",
         "build",
-        "coverage"
+        "coverage",
+        "src/__test__"
     ],
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig to read more about this file */
