@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.1 - 2023-07-30
+
+- Switched to javascript-sdk as the OAuth2 client library.
+
 ## 2.1.0 - 2023-07-25
 
 * **New:** OAuth2Client and OAuth2Config.
