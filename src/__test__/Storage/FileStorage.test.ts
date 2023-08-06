@@ -1,5 +1,5 @@
 import fs from "fs";
-import {FileStorage} from "../../Storage/FileStorage";
+import {FileStorage} from "@ssofy/javascript-sdk";
 
 describe('FileStorage Test', () => {
     const storagePath = fs.mkdtempSync('/tmp/');
