@@ -1,8 +1,16 @@
 # CHANGELOG
 
+## 2.2.0 - 2023-08-06
+
+* Wrapped models under Models namespace.
+* Wrapped entity models under Entities namespace.
+* Wrapped repository interfaces under Repositories namespace.
+* Fixed the user property type in AuthResponseEntity.
+* Fixed the return type with UserRepository::createToken().
+
 ## 2.1.1 - 2023-07-30
 
-- Switched to javascript-sdk as the OAuth2 client library.
+* Switched to javascript-sdk as the OAuth2 client library.
 
 ## 2.1.0 - 2023-07-25
 
