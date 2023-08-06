@@ -1,4 +1,5 @@
 import { UserEntity } from "../Models/Entities/UserEntity";
+import { TokenEntity } from "../Models/Entities/TokenEntity";
 export interface UserRepository {
     /**
      * Find user by credentials such as email, phone, etc.
@@ -32,7 +33,7 @@ export interface UserRepository {
      * Generate and store a new token for token-based authentication.
      * Returns the generated token.
      */
-    createToken(userId: string, ttl?: number): Promise<UserEntity | null>;
+    createToken(userId: string, ttl?: number): Promise<TokenEntity | null>;
     /**
      * Expire a token.
      */
