@@ -61,9 +61,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.APIClient = void 0;
 var axios_1 = __importStar(require("axios"));
-var InvalidTokenError_1 = require("../Errors/InvalidTokenError");
-var SignatureVerificationError_1 = require("../Errors/SignatureVerificationError");
-var APIError_1 = require("../Errors/APIError");
+var Errors_1 = require("../Errors");
 var SignatureGenerator_1 = require("../SignatureGenerator");
 var SignatureVerifier_1 = require("../SignatureVerifier");
 var APIClient = /** @class */ (function () {
@@ -172,7 +170,7 @@ var APIClient = /** @class */ (function () {
                         cached = _f.sent();
                         if (cached) {
                             if (cached === '') {
-                                throw new InvalidTokenError_1.InvalidTokenError();
+                                throw new Errors_1.InvalidTokenError();
                             }
                             return [2 /*return*/, JSON.parse(cached)];
                         }
@@ -197,7 +195,7 @@ var APIClient = /** @class */ (function () {
                         _f.label = 5;
                     case 5:
                         if (_e) {
-                            throw new SignatureVerificationError_1.SignatureVerificationError();
+                            throw new Errors_1.SignatureVerificationError();
                         }
                         if (!cache) return [3 /*break*/, 7];
                         ttl = 0;
@@ -212,7 +210,7 @@ var APIClient = /** @class */ (function () {
                     case 7: return [2 /*return*/, body];
                     case 8:
                         e_1 = _f.sent();
-                        if (!(e_1 instanceof InvalidTokenError_1.InvalidTokenError)) return [3 /*break*/, 10];
+                        if (!(e_1 instanceof Errors_1.InvalidTokenError)) return [3 /*break*/, 10];
                         if (!cache) return [3 /*break*/, 10];
                         // cache the failure result to avoid repetitive requests to server
                         return [4 /*yield*/, ((_d = this.config.cacheStore) === null || _d === void 0 ? void 0 : _d.put(cacheKey, '', this.config.cacheTtl))];
@@ -270,11 +268,11 @@ var APIClient = /** @class */ (function () {
                         if (e_2 instanceof axios_1.AxiosError && e_2.response) {
                             switch (e_2.response.status) {
                                 case 401:
-                                    throw new InvalidTokenError_1.InvalidTokenError();
+                                    throw new Errors_1.InvalidTokenError();
                                 case 400:
-                                    throw new SignatureVerificationError_1.SignatureVerificationError();
+                                    throw new Errors_1.SignatureVerificationError();
                                 default:
-                                    throw new APIError_1.APIError();
+                                    throw new Errors_1.APIError();
                             }
                         }
                         throw e_2;

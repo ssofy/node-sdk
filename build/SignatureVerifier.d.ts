@@ -1,4 +1,4 @@
-import { SignatureGenerator } from ".";
+import { SignatureGenerator } from "./SignatureGenerator";
 export declare class SignatureVerifier {
     private signatureGenerator;
     constructor(generator: SignatureGenerator);

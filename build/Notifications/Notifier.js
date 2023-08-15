@@ -58,65 +58,81 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignatureGenerator = void 0;
-var crypto = __importStar(require("crypto"));
-var SignatureGenerator = /** @class */ (function () {
-    function SignatureGenerator() {
+exports.Notifier = void 0;
+var Errors_1 = require("../Errors");
+var handlebars_1 = __importDefault(require("handlebars"));
+var fs = __importStar(require("fs/promises"));
+var Notifier = /** @class */ (function () {
+    function Notifier(sender, settings, templates) {
+        if (settings === void 0) { settings = {}; }
+        if (templates === void 0) { templates = []; }
+        var _this = this;
+        this.templates = {};
+        this.sender = sender;
+        this.settings = settings;
+        templates.forEach(function (template) {
+            _this.templates[_this.templateKey(template.name, template.format)] = template;
+        });
     }
-    SignatureGenerator.prototype.generate = function (url, params, secret, salt) {
+    Notifier.prototype.renderHandlebars = function (template, data) {
         return __awaiter(this, void 0, void 0, function () {
-            var path, toSign, hash;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, handlebars_1.default.compile(template)(data)];
+            });
+        });
+    };
+    Notifier.prototype.render = function (templateName, format, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var template, templateContent, viewData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        path = (new URL(url)).pathname;
-                        toSign = path + this.getValues(params).join('') + (salt || '');
-                        return [4 /*yield*/, this.hmac(toSign, secret)];
+                        template = this.templates[this.templateKey(templateName, format)];
+                        if (!template) {
+                            throw new Errors_1.TemplateNotFoundError(templateName);
+                        }
+                        return [4 /*yield*/, fs.readFile(template.path, 'utf8')];
                     case 1:
-                        hash = _a.sent();
-                        return [2 /*return*/, {
-                                hash: hash,
-                                salt: salt
-                            }];
+                        templateContent = _a.sent();
+                        viewData = {
+                            settings: this.settings,
+                            data: data,
+                        };
+                        switch (template.engine) {
+                            case 'handlebars':
+                                return [2 /*return*/, this.renderHandlebars(templateContent.trim(), viewData)];
+                        }
+                        throw new Errors_1.UnknownTemplateEngineError(template.engine);
                 }
             });
         });
     };
-    SignatureGenerator.prototype.getValues = function (obj) {
-        var values = [];
-        var flatten = Object.keys(obj)
-            .sort().reduce(function (r, k) { return (r[k] = obj[k], r); }, {});
-        for (var key in flatten) {
-            var value = flatten[key];
-            if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
-                values.push.apply(values, this.getValues(value));
-                continue;
-            }
-            if (typeof value == 'boolean') {
-                values.push(value ? '1' : '0');
-                continue;
-            }
-            values.push(value ? value.toString() : '');
+    Notifier.prototype.setTemplate = function (template) {
+        var _this = this;
+        if (Array.isArray(template)) {
+            template.forEach(function (template) {
+                _this.templates[_this.templateKey(template.name, template.format)] = template;
+            });
+            return;
         }
-        return values;
+        this.templates[this.templateKey(template.name, template.format)] = template;
     };
-    SignatureGenerator.prototype.hmac = function (message, secret) {
-        return __awaiter(this, void 0, void 0, function () {
-            var msgBuffer, hmacBuffer, hashArray;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        msgBuffer = new TextEncoder().encode(message);
-                        return [4 /*yield*/, crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: { name: 'SHA-256' } }, false, ['sign']).then(function (key) { return crypto.subtle.sign('HMAC', key, msgBuffer); })];
-                    case 1:
-                        hmacBuffer = _a.sent();
-                        hashArray = Array.from(new Uint8Array(hmacBuffer));
-                        return [2 /*return*/, hashArray.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('')];
-                }
-            });
-        });
+    Notifier.prototype.unsetTemplate = function (templateName, format) {
+        delete this.templates[this.templateKey(templateName, format)];
     };
-    return SignatureGenerator;
+    Notifier.prototype.hasTemplate = function (templateName, format) {
+        return !!this.templates[this.templateKey(templateName, format)];
+    };
+    Notifier.prototype.clearTemplates = function () {
+        this.templates = {};
+    };
+    Notifier.prototype.templateKey = function (templateName, format) {
+        return templateName + ':' + format;
+    };
+    return Notifier;
 }());
-exports.SignatureGenerator = SignatureGenerator;
+exports.Notifier = Notifier;

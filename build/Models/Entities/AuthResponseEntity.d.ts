@@ -1,6 +1,5 @@
-import { TokenEntity } from "./TokenEntity";
-import { UserEntity } from "./UserEntity";
+import { Models } from "..";
 export interface AuthResponseEntity {
-    user: UserEntity;
-    token?: TokenEntity;
+    user: Models.UserEntity;
+    token?: Models.TokenEntity;
 }
