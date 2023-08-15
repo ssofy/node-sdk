@@ -1,7 +1,6 @@
-import {Token} from "./Token";
-import {UserEntity} from "./Entities/UserEntity";
+import {Models} from ".";
 
 export interface APIResponse {
-    token?: Token
-    user?: UserEntity
+    token?: Models.Token
+    user?: Models.UserEntity
 }

@@ -1,21 +1,21 @@
-import {OTPOptionEntity} from "../Models/Entities/OTPOptionEntity";
+import {Models} from "../Models";
 
 export interface OTPRepository {
     /**
      * Get list of OTP options for the requested action.
      */
-    findAllByAction(userId: string, action: string, ip?: string): Promise<OTPOptionEntity[]>
+    findAllByAction(userId: string, action: string, ip?: string): Promise<Models.OTPOptionEntity[]>
 
     /**
      * Find OTP Option by id.
      */
-    findById(optionId: string, ip?: string): Promise<OTPOptionEntity | null>;
+    findById(optionId: string, ip?: string): Promise<Models.OTPOptionEntity | null>;
 
     /**
      * Generate and store a new OTP code for the selected option.
      * Returns the generated code.
      */
-    newVerificationCode(option: OTPOptionEntity, ip?: string): Promise<string>;
+    newVerificationCode(option: Models.OTPOptionEntity, ip?: string): Promise<string>;
 
     /**
      * Expire a previously generated OTP.

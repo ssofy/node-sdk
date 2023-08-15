@@ -1,15 +1,15 @@
-import {Signature} from "./Models/Signature";
+import {Models} from "./Models";
 import * as crypto from "crypto";
 
 export class SignatureGenerator {
-    async generate(url: string, params: any, secret: string, salt?: string): Promise<Signature> {
+    async generate(url: string, params: any, secret: string, salt?: string): Promise<Models.Signature> {
         const path = (new URL(url)).pathname;
 
         const toSign = path + this.getValues(params).join('') + (salt || '');
 
         const hash = await this.hmac(toSign, secret);
 
-        return <Signature>{
+        return <Models.Signature>{
             hash: hash,
             salt: salt
         };
@@ -18,11 +18,11 @@ export class SignatureGenerator {
     private getValues(obj: any): any {
         let values = [];
 
-        obj = (Object.keys(obj) as Array<keyof typeof obj>)
+        let flatten = (Object.keys(obj) as Array<keyof typeof obj>)
             .sort().reduce((r: any, k: any) => (r[k] = obj[k], r), {});
 
-        for (let key in obj) {
-            const value = obj[key];
+        for (let key in flatten) {
+            const value = flatten[key];
 
             if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
                 values.push(...this.getValues(value));

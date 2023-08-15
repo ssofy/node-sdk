@@ -1,11 +1,7 @@
 import axios, {AxiosError} from 'axios';
 import {APIConfig} from "./APIConfig";
-import {InvalidTokenError} from "../Errors/InvalidTokenError";
-import {SignatureVerificationError} from "../Errors/SignatureVerificationError";
-import {APIError} from "../Errors/APIError";
-import {Token} from "../Models/Token";
-import {APIResponse} from "../Models/APIResponse";
-import {UserEntity} from "../Models/Entities/UserEntity";
+import {InvalidTokenError, SignatureVerificationError, APIError} from "../Errors";
+import {Models} from "../Models";
 import {SignatureGenerator} from "../SignatureGenerator";
 import {SignatureVerifier} from "../SignatureVerifier";
 
@@ -18,36 +14,36 @@ export class APIClient {
         this.signatureGenerator = new SignatureGenerator();
     }
 
-    async verifyAuthentication(token: string): Promise<APIResponse> {
+    async verifyAuthentication(token: string): Promise<Models.APIResponse> {
         const path = 'v1/authenticated/verify';
 
         const response = await this.requestAndCache(path, this.sanitizeToken(token));
 
-        return <APIResponse>{
-            token: this.forceCast<Token>(response.token)
+        return <Models.APIResponse>{
+            token: this.forceCast<Models.Token>(response.token)
         };
     }
 
-    async authenticatedUser(token: string, cache: boolean = false): Promise<APIResponse> {
+    async authenticatedUser(token: string, cache: boolean = false): Promise<Models.APIResponse> {
         const path = 'v1/authenticated/user';
 
         const response = await this.requestAndCache(path, this.sanitizeToken(token), {}, cache);
 
-        return <APIResponse>{
-            user: this.forceCast<UserEntity>(response.user),
-            token: this.forceCast<Token>(response.token)
+        return <Models.APIResponse>{
+            user: this.forceCast<Models.UserEntity>(response.user),
+            token: this.forceCast<Models.Token>(response.token)
         };
     }
 
-    async findUserById(id: string, cache: boolean = false): Promise<APIResponse> {
+    async findUserById(id: string, cache: boolean = false): Promise<Models.APIResponse> {
         const path = `v1/resources/users/find`;
 
         const response = await this.requestAndCache(path, undefined, {
             id: id,
         }, cache);
 
-        return <APIResponse>{
-            user: this.forceCast<UserEntity>(response.user)
+        return <Models.APIResponse>{
+            user: this.forceCast<Models.UserEntity>(response.user)
         };
     }
 

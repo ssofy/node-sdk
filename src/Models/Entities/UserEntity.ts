@@ -5,6 +5,7 @@ export interface UserEntity {
     name?: string
     picture?: string
     profile?: string
+    username?: string
     email?: string
     email_verified?: boolean
     phone?: string
