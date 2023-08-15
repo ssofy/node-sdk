@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.3.0 - 2023-08-15
+
+* Added EventManager feature under Events namespace.
+* Added Notifier feature under Notifications namespace.
+* Added Connection type under Datasource namespace.
+* Merged Entities namespace into Models namespace.
+* Improved types in model and repository interfaces.
+
 ## 2.2.0 - 2023-08-06
 
 * Wrapped models under Models namespace.
