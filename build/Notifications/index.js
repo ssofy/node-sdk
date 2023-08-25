@@ -24,9 +24,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notifications = void 0;
-var NotifierInternal = __importStar(require("./Notifier"));
-var ConsoleNotifierInternal = __importStar(require("./ConsoleNotifier"));
-var FormatInternal = __importStar(require("./Format"));
+const NotifierInternal = __importStar(require("./Notifier"));
+const ConsoleNotifierInternal = __importStar(require("./ConsoleNotifier"));
+const FormatInternal = __importStar(require("./Format"));
 var Notifications;
 (function (Notifications) {
     Notifications.Notifier = NotifierInternal.Notifier;

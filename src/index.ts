@@ -9,3 +9,5 @@ export * from './Models';
 export * from './Repositories';
 export * from './Notifications';
 export * from './Events';
+export * from './Datasource';
+export * from './helpers';

@@ -31,3 +31,5 @@ __exportStar(require("./Models"), exports);
 __exportStar(require("./Repositories"), exports);
 __exportStar(require("./Notifications"), exports);
 __exportStar(require("./Events"), exports);
+__exportStar(require("./Datasource"), exports);
+__exportStar(require("./helpers"), exports);

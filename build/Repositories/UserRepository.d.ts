@@ -15,24 +15,24 @@ export interface UserRepository {
     /**
      * Find user by social provided user.
      */
-    findBySocialLinkOrCreate(provider: string, user: Models.UserEntity, ip?: string): Promise<Models.UserEntity | null>;
+    findBySocialLinkOrCreate(provider: string, user: Models.UserEntity, ip?: string): Promise<Models.UserEntity>;
     /**
      * Find or create user by email.
      */
-    findByEmailOrCreate(user: Models.UserEntity, password?: string, ip?: string): Promise<Models.UserEntity | null>;
+    findByEmailOrCreate(user: Models.UserEntity, password?: string, ip?: string): Promise<Models.UserEntity>;
     /**
      * Create a user.
      */
-    create(user: Models.UserEntity, password?: string, ip?: string): Promise<Models.UserEntity | null>;
+    create(user: Models.UserEntity, password?: string, ip?: string): Promise<Models.UserEntity>;
     /**
      * Update a user.
      */
-    update(user: Models.UserEntity, ip?: string): Promise<Models.UserEntity | null>;
+    update(user: Models.UserEntity, ip?: string): Promise<Models.UserEntity>;
     /**
      * Generate and store a new token for token-based authentication.
      * Returns the generated token.
      */
-    createToken(userId: string, ttl?: number): Promise<Models.TokenEntity | null>;
+    createToken(userId: string, ttl?: number): Promise<Models.TokenEntity>;
     /**
      * Expire a token.
      */

@@ -1,8 +1,10 @@
+import * as ItemInternal from './Item';
+import * as ParametersInternal from './Criteria';
 import * as ConnectionInternal from './Connection';
-import * as ParametersInternal from './Parameters';
-import * as RecordInternal from './Record';
+import * as PrismaConnectionInternal from './PrismaConnection';
 export declare namespace Datasource {
-    type Connection = ConnectionInternal.Connection;
-    type Parameters = ParametersInternal.Parameters;
-    type Record = RecordInternal.Record;
+    type Criteria = ParametersInternal.Criteria;
+    type Item = ItemInternal.Item;
+    export import Connection = ConnectionInternal.Connection;
+    export import PrismaConnection = PrismaConnectionInternal.PrismaConnection;
 }
