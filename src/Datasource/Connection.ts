@@ -1,13 +1,13 @@
 import {Datasource} from ".";
 
-export interface Connection {
-    query(collection: any, criteria: Datasource.Parameters): Promise<Datasource.Record[]>;
+export abstract class Connection {
+    abstract query(schema: any, criteria: Datasource.Criteria): Promise<Datasource.Item[]>;
 
-    insert(collection: any, attributes: Datasource.Parameters): Promise<Datasource.Record>;
+    abstract insert(schema: any, item: Datasource.Item): Promise<Datasource.Item>;
 
-    update(collection: any, criteria: Datasource.Parameters, attributes: Datasource.Record): Promise<void>;
+    abstract update(schema: any, criteria: Datasource.Criteria, item: Datasource.Item): Promise<void>;
 
-    upsert(collection: any, criteria: Datasource.Parameters, attributes: Datasource.Record): Promise<void>;
+    abstract upsert(schema: any, criteria: Datasource.Criteria, item: Datasource.Item): Promise<void>;
 
-    delete(collection: any, criteria: Datasource.Parameters): Promise<void>;
+    abstract delete(schema: any, criteria: Datasource.Criteria): Promise<void>;
 }
