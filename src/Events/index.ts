@@ -1,9 +1,9 @@
-import * as EventManagerInternal from "./EventManager";
-import * as DefaultEventManagerInternal from "./DefaultEventManager";
-import * as RedisEventManagerInternal from "./RedisEventManager";
+import * as ChannelInternal from "./Channel";
+import * as NodeChannelInternal from "./NodeChannel";
+import * as RedisChannelInternal from "./RedisChannel";
 
 export namespace Events {
-    export import EventManager = EventManagerInternal.EventManager;
-    export import DefaultEventManager = DefaultEventManagerInternal.DefaultEventManager;
-    export import RedisEventManager = RedisEventManagerInternal.RedisEventManager;
+    export import EventChannel = ChannelInternal.Channel;
+    export import NodeEventChannel = NodeChannelInternal.NodeChannel;
+    export import RedisEventChannel = RedisChannelInternal.RedisChannel;
 }

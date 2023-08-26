@@ -1,24 +1,29 @@
-import {EventManager} from "./EventManager";
+import {Channel} from "./Channel";
 
-export class RedisEventManager extends EventManager {
-    private publisher: any;
-    private subscriber: any;
+export class RedisChannel extends Channel {
+    private publisher?: any;
+    private subscriber?: any;
     private readonly channelPrefix: string;
 
     private messageQueue: Array<{ event: string, message: any }> = [];
     private handlers: { [event: string]: Array<(event: string, message?: any) => void> } = {};
 
-    constructor(publisher: any, subscriber: any, channelPrefix: string = 'sso:') {
+    constructor(publisher?: any, subscriber?: any, channelPrefix: string = 'sso:') {
         super();
         this.publisher = publisher;
         this.subscriber = subscriber;
         this.channelPrefix = channelPrefix;
 
-        this.subscriber.on('ready', this.resubscribe.bind(this));
-        this.publisher.on('ready', this.flushQueue.bind(this));
+        if (subscriber) {
+            subscriber.on('ready', this.resubscribe.bind(this));
+        }
+
+        if (publisher) {
+            publisher.on('ready', this.flushQueue.bind(this));
+        }
     }
 
-    emit(event: string, message?: any): void {
+    publish(event: string, message?: any): void {
         if (this.publisher.isReady) {
             this.actualEmit(event, message);
             return;
@@ -27,7 +32,7 @@ export class RedisEventManager extends EventManager {
         this.messageQueue.push({event, message});
     }
 
-    listen(event: string, handler: (event: string, message?: any) => void): void {
+    subscribe(event: string, handler: (event: string, message?: any) => void): void {
         if (!this.handlers[event]) {
             this.handlers[event] = [];
         }
