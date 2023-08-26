@@ -3,6 +3,6 @@ import {Notifications} from ".";
 export interface Template {
     name: string;
     path: string;
-    engine: 'handlebars';
+    engine?: Notifications.TemplateEngine;
     channel: Notifications.Channel;
 }

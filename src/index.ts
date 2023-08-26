@@ -5,8 +5,11 @@ export {OAuth2Client} from "./OAuth2Client";
 export {SignatureGenerator} from "./SignatureGenerator";
 export {SignatureVerifier} from "./SignatureVerifier";
 
+export * from './Storages'
 export * from './Models';
 export * from './Repositories';
+export * from './Filters';
+export * from './Transformers';
 export * from './Notifications';
 export * from './Events';
 export * from './Datasource';

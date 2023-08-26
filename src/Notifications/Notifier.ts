@@ -1,6 +1,5 @@
 import {Notifications} from ".";
-import {UnknownTemplateEngineError, TemplateNotFoundError} from "../Errors";
-import Handlebars from "handlebars";
+import {TemplateNotFoundError} from "../Errors";
 import * as fs from 'fs/promises';
 
 export abstract class Notifier {
@@ -26,10 +25,6 @@ export abstract class Notifier {
 
     abstract notify(receiver: string, template: string, data?: any): Promise<void>;
 
-    protected async renderHandlebars(template: string, data: any): Promise<string> {
-        return Handlebars.compile(template)(data);
-    }
-
     protected async render(template: string, data: any): Promise<string> {
         const tpl: Notifications.Template | undefined = this.templates[this.templateKey(template)];
 
@@ -40,16 +35,15 @@ export abstract class Notifier {
         const templateContent: string = await fs.readFile(tpl.path, 'utf8');
 
         const viewData = {
-            settings: this.vars,
+            vars: this.vars,
             data: data,
         };
 
-        switch (tpl.engine) {
-            case 'handlebars':
-                return this.renderHandlebars(templateContent.trim(), viewData);
+        if (!tpl.engine) {
+            return JSON.stringify(viewData);
         }
 
-        throw new UnknownTemplateEngineError(tpl.engine);
+        return await tpl.engine.render(templateContent.trim(), viewData);
     }
 
     setTemplate(template: Notifications.Template | Notifications.Template[]): void {
