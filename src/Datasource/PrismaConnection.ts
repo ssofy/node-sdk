@@ -1,6 +1,6 @@
-import {PrismaClient} from '@prisma/client';
 import {Datasource} from ".";
 import {Connection} from "./Connection";
+import {PrismaClient} from '@prisma/client';
 
 export class PrismaConnection extends Connection {
     protected client: PrismaClient;
