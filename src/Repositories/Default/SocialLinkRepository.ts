@@ -6,7 +6,7 @@ export class SocialLinkRepository implements Repositories.SocialLinkRepository {
     protected schema: any;
     protected columns: { [key: string]: string };
 
-    constructor(connection: Datasource.Connection, schema: any, columnMap: { [key: string]: string }) {
+    constructor(connection: Datasource.Connection, schema: any, columnMap: { [key: string]: string } = {}) {
         this.connection = connection;
         this.schema = schema;
         this.columns = columnMap;

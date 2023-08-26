@@ -19,7 +19,7 @@ export class UserRepository implements Repositories.UserRepository {
                 tokenStorage: Storage,
                 socialLinkRepository: Repositories.SocialLinkRepository,
                 userTransformer: Transformers.Transformer,
-                columnMap: { [key: string]: string }
+                columnMap: { [key: string]: string } = {}
     ) {
         this.connection = connection;
         this.schema = schema;
@@ -103,25 +103,24 @@ export class UserRepository implements Repositories.UserRepository {
 
         userAttributes.password = this.makePassword(password);
 
-        return this.storeUser(userAttributes);
+        const item = this.makeUserItem(userAttributes);
+        await this.connection.insert(this.schema, item);
+
+        return this.userTransformer.transform(item);
     }
 
     async update(user: Models.UserEntity, ip?: string): Promise<Models.UserEntity> {
         const userAttributes: any = user;
 
-        let item: Datasource.Item = Object.keys(userAttributes).reduce((acc: Datasource.Item, key: string) => {
-            acc[this.columns[key] ?? key] = userAttributes[key as keyof Models.UserEntity];
-            return acc;
-        }, {} as Datasource.Item);
-
-        delete item[this.columns.id ?? 'id'];
-
         let criteria: Datasource.Criteria = {};
         criteria[this.columns.id ?? 'id'] = user.id;
 
+        let item = this.makeUserItem(userAttributes);
+        delete item[this.columns.id ?? 'id'];
+
         await this.connection.update(this.schema, criteria, item);
 
-        return user;
+        return this.userTransformer.transform(item);
     }
 
     async createToken(userId: string, ttl?: number): Promise<Models.TokenEntity> {
@@ -167,24 +166,24 @@ export class UserRepository implements Repositories.UserRepository {
         return this.connection.update(this.schema, criteria, item);
     }
 
-    protected async storeUser(userAttributes: any): Promise<Models.UserEntity> {
-        if (!userAttributes['name'] || userAttributes['name'] === '') {
-            userAttributes['name'] = (userAttributes.given_name?.toString().trim() + ' ' + userAttributes.family_name?.toString().trim()).trim();
+    protected makeUserItem(userAttributes: any): Datasource.Item {
+        if (!userAttributes[this.columns['name'] ?? 'name'] || userAttributes[this.columns['name'] ?? 'name'].trim() === '') {
+            userAttributes[this.columns['name'] ?? 'name'] = (userAttributes.given_name?.toString().trim() + ' ' + userAttributes.family_name?.toString().trim()).trim();
         }
 
         let item: Datasource.Item = Object.keys(userAttributes).reduce((acc: Datasource.Item, key: string) => {
-            acc[this.columns[key] ?? key] = userAttributes[key as keyof Models.UserEntity];
+            if (this.columns[key]) {
+                acc[this.columns[key]] = userAttributes[key as keyof Models.UserEntity];
+            }
             return acc;
         }, {} as Datasource.Item);
 
         if (this.columns.metadata) {
-            delete item[this.columns.password ?? 'password'];
             item[this.columns.metadata] = userAttributes;
+            delete item[this.columns.metadata][this.columns.password ?? 'password'];
         }
 
-        item = await this.connection.insert(this.schema, item);
-
-        return this.userTransformer.transform(item);
+        return item;
     }
 
     protected makePassword(password: string): string {
