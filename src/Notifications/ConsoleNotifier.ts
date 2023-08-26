@@ -1,13 +1,18 @@
-import {Notifications} from ".";
 import {Notifier} from "./Notifier";
 
 export class ConsoleNotifier extends Notifier {
-    async notify(templateName: string, format: Notifications.Format, to: string, data?: any): Promise<void> {
-        const message: string = await this.render(templateName, format, data);
+    async notify(receiver: string, template: string, data?: any): Promise<void> {
+        let message: string;
+
+        try {
+            message = await this.render(template, data);
+        } catch (e) {
+            message = data;
+        }
 
         console.log({
             from: this.sender,
-            to: to,
+            to: receiver,
             message: message,
         });
     }

@@ -4,72 +4,79 @@ import Handlebars from "handlebars";
 import * as fs from 'fs/promises';
 
 export abstract class Notifier {
+    protected channel: Notifications.Channel;
     protected sender: string;
-    protected settings: any;
+    protected vars: any;
     protected templates: { [key: string]: Notifications.Template } = {};
 
-    constructor(sender: string, settings: any = {}, templates: Notifications.Template[] = []) {
+    constructor(
+        channel: Notifications.Channel,
+        sender: string,
+        templates: Notifications.Template[] = [],
+        vars: any = {}
+    ) {
+        this.channel = channel;
         this.sender = sender;
-        this.settings = settings;
+        this.vars = vars;
 
         templates.forEach((template: Notifications.Template) => {
-            this.templates[this.templateKey(template.name, template.format)] = template;
+            this.templates[this.templateKey(template.name)] = template;
         });
     }
 
-    abstract notify(templateName: string, format: Notifications.Format, to: string, data?: any): Promise<void>;
+    abstract notify(receiver: string, template: string, data?: any): Promise<void>;
 
     protected async renderHandlebars(template: string, data: any): Promise<string> {
         return Handlebars.compile(template)(data);
     }
 
-    protected async render(templateName: string, format: Notifications.Format, data: any): Promise<string> {
-        const template: Notifications.Template | undefined = this.templates[this.templateKey(templateName, format)];
+    protected async render(template: string, data: any): Promise<string> {
+        const tpl: Notifications.Template | undefined = this.templates[this.templateKey(template)];
 
-        if (!template) {
-            throw new TemplateNotFoundError(templateName);
+        if (!tpl) {
+            throw new TemplateNotFoundError(template);
         }
 
-        const templateContent: string = await fs.readFile(template.path, 'utf8');
+        const templateContent: string = await fs.readFile(tpl.path, 'utf8');
 
         const viewData = {
-            settings: this.settings,
+            settings: this.vars,
             data: data,
         };
 
-        switch (template.engine) {
+        switch (tpl.engine) {
             case 'handlebars':
                 return this.renderHandlebars(templateContent.trim(), viewData);
         }
 
-        throw new UnknownTemplateEngineError(template.engine);
+        throw new UnknownTemplateEngineError(tpl.engine);
     }
 
     setTemplate(template: Notifications.Template | Notifications.Template[]): void {
         if (Array.isArray(template)) {
             template.forEach((template: Notifications.Template) => {
-                this.templates[this.templateKey(template.name, template.format)] = template;
+                this.templates[this.templateKey(template.name)] = template;
             })
 
             return;
         }
 
-        this.templates[this.templateKey(template.name, template.format)] = template;
+        this.templates[this.templateKey(template.name)] = template;
     }
 
-    unsetTemplate(templateName: string, format: Notifications.Format): void {
-        delete this.templates[this.templateKey(templateName, format)];
+    unsetTemplate(template: string): void {
+        delete this.templates[this.templateKey(template)];
     }
 
-    hasTemplate(templateName: string, format: Notifications.Format): boolean {
-        return !!this.templates[this.templateKey(templateName, format)];
+    hasTemplate(template: string): boolean {
+        return !!this.templates[this.templateKey(template)];
     }
 
     clearTemplates(): void {
         this.templates = {};
     }
 
-    private templateKey(templateName: string, format: Notifications.Format): string {
-        return templateName + ':' + format;
+    private templateKey(template: string): string {
+        return template + ':' + this.channel;
     }
 }
