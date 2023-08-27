@@ -1,18 +1,21 @@
 import {Notifications} from ".";
 import {Notifier} from "./Notifier";
-import Mailgun from 'mailgun-js';
+import {Interfaces} from 'mailgun.js';
 
 export class MailgunEmailNotifier extends Notifier {
-    private client: Mailgun.Mailgun;
+    protected client: Interfaces.IMailgunClient;
+    protected domain: string;
 
     constructor(
-        mailgun: Mailgun.Mailgun,
+        mailgun: Interfaces.IMailgunClient,
+        domain: string,
         sender: string,
         templates: Notifications.Template[] = [],
         vars: any = {}
     ) {
         super(Notifications.Channel.EMAIL, sender, templates, vars);
         this.client = mailgun;
+        this.domain = domain;
     }
 
     async notify(receiver: string, template: string, data?: any): Promise<void> {
@@ -25,12 +28,11 @@ export class MailgunEmailNotifier extends Notifier {
             html: messageContent,
         };
 
-        await this.client.messages().send(messageData, (error, body) => {
-            if (error) {
-                console.error('Error sending email using Mailgun:', error);
-            } else {
-                console.log('Email sent successfully using Mailgun:', body);
-            }
-        });
+        try {
+            const response = await this.client.messages.create(this.domain, messageData);
+            console.log('Email sent successfully using Mailgun:', response);
+        } catch (error) {
+            console.error('Error sending email using Mailgun:', error);
+        }
     }
 }
