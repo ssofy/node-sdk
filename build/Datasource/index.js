@@ -25,9 +25,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Datasource = void 0;
 const ConnectionInternal = __importStar(require("./Connection"));
+const MongooseConnectionInternal = __importStar(require("./MongooseConnection"));
+const MongoDBConnectionInternal = __importStar(require("./MongoDBConnection"));
+const MySQLConnectionInternal = __importStar(require("./MySQLConnection"));
+const PGConnectionInternal = __importStar(require("./PGConnection"));
+const DynamoDBConnectionInternal = __importStar(require("./DynamoDBConnection"));
 const PrismaConnectionInternal = __importStar(require("./PrismaConnection"));
+const SequelizeConnectionInternal = __importStar(require("./SequelizeConnection"));
 var Datasource;
 (function (Datasource) {
     Datasource.Connection = ConnectionInternal.Connection;
+    Datasource.MongoDBConnection = MongoDBConnectionInternal.MongoDBConnection;
+    Datasource.MongooseConnection = MongooseConnectionInternal.MongooseConnection;
+    Datasource.DynamoDBConnection = DynamoDBConnectionInternal.DynamoDBConnection;
+    Datasource.PGConnectionConnection = PGConnectionInternal.PGConnection;
+    Datasource.MySQLPoolConnection = MySQLConnectionInternal.MySQLPoolConnection;
     Datasource.PrismaConnection = PrismaConnectionInternal.PrismaConnection;
+    Datasource.SequelizeConnection = SequelizeConnectionInternal.SequelizeConnection;
 })(Datasource = exports.Datasource || (exports.Datasource = {}));

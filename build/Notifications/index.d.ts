@@ -1,10 +1,14 @@
 import * as NotifierInternal from "./Notifier";
 import * as ConsoleNotifierInternal from "./ConsoleNotifier";
 import * as TemplateInternal from "./Template";
-import * as FormatInternal from "./Format";
+import * as MessageTypeInternal from "./Channel";
+import * as TemplateEngineInternal from "./TemplateEngine";
+import * as HandlebarsEngineInternal from "./HandlebarsEngine";
 export declare namespace Notifications {
+    type Template = TemplateInternal.Template;
+    export import Channel = MessageTypeInternal.Channel;
     export import Notifier = NotifierInternal.Notifier;
     export import ConsoleNotifier = ConsoleNotifierInternal.ConsoleNotifier;
-    export import Format = FormatInternal.Format;
-    type Template = TemplateInternal.Template;
+    export import TemplateEngine = TemplateEngineInternal.TemplateEngine;
+    export import HandlebarsEngine = HandlebarsEngineInternal.HandlebarsEngine;
 }

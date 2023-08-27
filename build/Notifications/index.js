@@ -26,10 +26,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notifications = void 0;
 const NotifierInternal = __importStar(require("./Notifier"));
 const ConsoleNotifierInternal = __importStar(require("./ConsoleNotifier"));
-const FormatInternal = __importStar(require("./Format"));
+const MessageTypeInternal = __importStar(require("./Channel"));
+const TemplateEngineInternal = __importStar(require("./TemplateEngine"));
+const HandlebarsEngineInternal = __importStar(require("./HandlebarsEngine"));
 var Notifications;
 (function (Notifications) {
+    Notifications.Channel = MessageTypeInternal.Channel;
     Notifications.Notifier = NotifierInternal.Notifier;
     Notifications.ConsoleNotifier = ConsoleNotifierInternal.ConsoleNotifier;
-    Notifications.Format = FormatInternal.Format;
+    Notifications.TemplateEngine = TemplateEngineInternal.TemplateEngine;
+    Notifications.HandlebarsEngine = HandlebarsEngineInternal.HandlebarsEngine;
 })(Notifications = exports.Notifications || (exports.Notifications = {}));

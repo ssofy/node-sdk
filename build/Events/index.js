@@ -24,12 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Events = void 0;
-const EventManagerInternal = __importStar(require("./EventManager"));
-const DefaultEventManagerInternal = __importStar(require("./DefaultEventManager"));
-const RedisEventManagerInternal = __importStar(require("./RedisEventManager"));
+const ChannelInternal = __importStar(require("./Channel"));
+const NodeChannelInternal = __importStar(require("./NodeChannel"));
+const RedisChannelInternal = __importStar(require("./RedisChannel"));
 var Events;
 (function (Events) {
-    Events.EventManager = EventManagerInternal.EventManager;
-    Events.DefaultEventManager = DefaultEventManagerInternal.DefaultEventManager;
-    Events.RedisEventManager = RedisEventManagerInternal.RedisEventManager;
+    Events.EventChannel = ChannelInternal.Channel;
+    Events.NodeEventChannel = NodeChannelInternal.NodeChannel;
+    Events.RedisEventChannel = RedisChannelInternal.RedisChannel;
 })(Events = exports.Events || (exports.Events = {}));

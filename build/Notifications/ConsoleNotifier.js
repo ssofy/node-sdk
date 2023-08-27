@@ -12,12 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConsoleNotifier = void 0;
 const Notifier_1 = require("./Notifier");
 class ConsoleNotifier extends Notifier_1.Notifier {
-    notify(templateName, format, to, data) {
+    notify(receiver, template, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const message = yield this.render(templateName, format, data);
+            const message = yield this.render(template, data);
             console.log({
                 from: this.sender,
-                to: to,
+                to: receiver,
                 message: message,
             });
         });

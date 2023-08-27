@@ -31,66 +31,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Notifier = void 0;
 const Errors_1 = require("../Errors");
-const handlebars_1 = __importDefault(require("handlebars"));
 const fs = __importStar(require("fs/promises"));
 class Notifier {
-    constructor(sender, settings = {}, templates = []) {
+    constructor(channel, sender, templates = [], vars = {}) {
         this.templates = {};
+        this.channel = channel;
         this.sender = sender;
-        this.settings = settings;
+        this.vars = vars;
         templates.forEach((template) => {
-            this.templates[this.templateKey(template.name, template.format)] = template;
+            this.templates[this.templateKey(template.name)] = template;
         });
     }
-    renderHandlebars(template, data) {
+    render(template, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return handlebars_1.default.compile(template)(data);
-        });
-    }
-    render(templateName, format, data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const template = this.templates[this.templateKey(templateName, format)];
-            if (!template) {
-                throw new Errors_1.TemplateNotFoundError(templateName);
+            const tpl = this.templates[this.templateKey(template)];
+            if (!tpl) {
+                throw new Errors_1.TemplateNotFoundError(template);
             }
-            const templateContent = yield fs.readFile(template.path, 'utf8');
+            const templateContent = yield fs.readFile(tpl.path, 'utf8');
             const viewData = {
-                settings: this.settings,
+                vars: this.vars,
                 data: data,
             };
-            switch (template.engine) {
-                case 'handlebars':
-                    return this.renderHandlebars(templateContent.trim(), viewData);
+            if (!tpl.engine) {
+                return JSON.stringify(viewData);
             }
-            throw new Errors_1.UnknownTemplateEngineError(template.engine);
+            return yield tpl.engine.render(templateContent.trim(), viewData);
         });
     }
     setTemplate(template) {
         if (Array.isArray(template)) {
             template.forEach((template) => {
-                this.templates[this.templateKey(template.name, template.format)] = template;
+                this.templates[this.templateKey(template.name)] = template;
             });
             return;
         }
-        this.templates[this.templateKey(template.name, template.format)] = template;
+        this.templates[this.templateKey(template.name)] = template;
     }
-    unsetTemplate(templateName, format) {
-        delete this.templates[this.templateKey(templateName, format)];
+    unsetTemplate(template) {
+        delete this.templates[this.templateKey(template)];
     }
-    hasTemplate(templateName, format) {
-        return !!this.templates[this.templateKey(templateName, format)];
+    hasTemplate(template) {
+        return !!this.templates[this.templateKey(template)];
     }
     clearTemplates() {
         this.templates = {};
     }
-    templateKey(templateName, format) {
-        return templateName + ':' + format;
+    templateKey(template) {
+        return template + ':' + this.channel;
     }
 }
 exports.Notifier = Notifier;
