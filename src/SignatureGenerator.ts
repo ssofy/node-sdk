@@ -1,5 +1,5 @@
 import {Models} from "./Models";
-import * as crypto from "crypto";
+import crypto from 'crypto';
 
 export class SignatureGenerator {
     async generate(url: string, params: any, secret: string, salt?: string): Promise<Models.Signature> {
@@ -41,16 +41,8 @@ export class SignatureGenerator {
     }
 
     private async hmac(message: string, secret: string) {
-        const msgBuffer = new TextEncoder().encode(message);
-        const hmacBuffer = await crypto.subtle.importKey(
-            'raw',
-            new TextEncoder().encode(secret),
-            {name: 'HMAC', hash: {name: 'SHA-256'}},
-            false,
-            ['sign']
-        ).then(key => crypto.subtle.sign('HMAC', key, msgBuffer));
-
-        const hashArray = Array.from(new Uint8Array(hmacBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        const hmac = crypto.createHmac('sha256', secret);
+        hmac.update(message);
+        return hmac.digest('hex');
     }
 }
