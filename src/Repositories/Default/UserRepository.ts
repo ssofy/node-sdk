@@ -11,14 +11,14 @@ export class UserRepository implements Repositories.UserRepository {
     protected schema: any;
     protected tokenStorage: Storage;
     protected socialLinkRepository: Repositories.SocialLinkRepository;
-    protected userTransformer: Transformers.Transformer;
+    protected userTransformer: Transformers.UserTransformer;
     protected columns: { [key: string]: string };
 
     constructor(connection: Datasource.Connection,
                 schema: any,
                 tokenStorage: Storage,
                 socialLinkRepository: Repositories.SocialLinkRepository,
-                userTransformer: Transformers.Transformer,
+                userTransformer: Transformers.UserTransformer,
                 columnMap: { [key: string]: string } = {}
     ) {
         this.connection = connection;

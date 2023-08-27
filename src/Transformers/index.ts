@@ -1,7 +1,7 @@
-import * as TransformerInternal from './Transformer'
 import * as UserFilterInternal from './UserTransformer'
+import * as DefaultUserTransformerInternal from './DefaultUserTransformer'
 
 export namespace Transformers {
-    export type Transformer = TransformerInternal.Transformer;
-    export import UserTransformer = UserFilterInternal.UserTransformer;
+    export type UserTransformer = UserFilterInternal.UserTransformer;
+    export import DefaultUserTransformer = DefaultUserTransformerInternal.DefaultUserTransformer;
 }
