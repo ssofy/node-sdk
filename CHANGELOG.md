@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.4.1 - 2023-08-27
+
+* Var **set**/**unset** functions added in Notifier.
+* Removed generic transformer interface.
+
 ## 2.4.0 - 2023-08-27
 
 * Decoupled template engines from notifier. (HandlebarsEngine at the moment).
