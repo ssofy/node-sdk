@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## 2.4.0 - 2023-08-27
+
+* Decoupled template engines from notifier. (HandlebarsEngine at the moment).
+* Added SocialLinkRepository interface.
+* Added default (generic) repositories.
+* Added mock repositories.
+* Added Helpers.
+* Added Filters.
+* Added Transformers.
+* Wrapped the javascript-sdk storage classes.
+* Fixed the issue with SignatureGenerator.
+* New Datasource:
+  - mongodb
+  - mongoose
+  - dynamodb
+  - pg
+  - mysql2
+  - sequelize
+* New Notifiers:
+  - Twilio (SMS)
+  - Vonage (SMS)
+  - SendGrid (Email)
+  - SES (Email)
+  - Mailgun (Email)
+  - Mandrill (Email)
+  - Nodemailer (Email/SMTP)
+* New Event Channels:
+  - Redis (Pub/Sub).
+* More Fixes.
+
 ## 2.3.0 - 2023-08-15
 
 * Added EventManager feature under Events namespace.
