@@ -5,14 +5,14 @@ import * as fs from 'fs/promises';
 export abstract class Notifier {
     protected channel: Notifications.Channel;
     protected sender: string;
-    protected vars: any;
+    protected vars: { [key: string]: any };
     protected templates: { [key: string]: Notifications.Template } = {};
 
     constructor(
         channel: Notifications.Channel,
         sender: string,
         templates: Notifications.Template[] = [],
-        vars: any = {}
+        vars: { [key: string]: any } = {}
     ) {
         this.channel = channel;
         this.sender = sender;
@@ -68,6 +68,22 @@ export abstract class Notifier {
 
     clearTemplates(): void {
         this.templates = {};
+    }
+
+    setVar(name: string, value: any): void {
+        this.vars[name] = value;
+    }
+
+    unsetVar(name: string): void {
+        delete this.vars[name];
+    }
+
+    hasVar(name: string): boolean {
+        return !!this.vars[name];
+    }
+
+    clearVars(): void {
+        this.vars = {};
     }
 
     private templateKey(template: string): string {
