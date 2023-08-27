@@ -80,6 +80,18 @@ class Notifier {
     clearTemplates() {
         this.templates = {};
     }
+    setVar(name, value) {
+        this.vars[name] = value;
+    }
+    unsetVar(name) {
+        delete this.vars[name];
+    }
+    hasVar(name) {
+        return !!this.vars[name];
+    }
+    clearVars() {
+        this.vars = {};
+    }
     templateKey(template) {
         return template + ':' + this.channel;
     }

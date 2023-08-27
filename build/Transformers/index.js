@@ -24,8 +24,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Transformers = void 0;
-const UserFilterInternal = __importStar(require("./UserTransformer"));
+const DefaultUserTransformerInternal = __importStar(require("./DefaultUserTransformer"));
 var Transformers;
 (function (Transformers) {
-    Transformers.UserTransformer = UserFilterInternal.UserTransformer;
+    Transformers.DefaultUserTransformer = DefaultUserTransformerInternal.DefaultUserTransformer;
 })(Transformers = exports.Transformers || (exports.Transformers = {}));

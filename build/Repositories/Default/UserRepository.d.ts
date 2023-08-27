@@ -8,11 +8,11 @@ export declare class UserRepository implements Repositories.UserRepository {
     protected schema: any;
     protected tokenStorage: Storage;
     protected socialLinkRepository: Repositories.SocialLinkRepository;
-    protected userTransformer: Transformers.Transformer;
+    protected userTransformer: Transformers.UserTransformer;
     protected columns: {
         [key: string]: string;
     };
-    constructor(connection: Datasource.Connection, schema: any, tokenStorage: Storage, socialLinkRepository: Repositories.SocialLinkRepository, userTransformer: Transformers.Transformer, columnMap?: {
+    constructor(connection: Datasource.Connection, schema: any, tokenStorage: Storage, socialLinkRepository: Repositories.SocialLinkRepository, userTransformer: Transformers.UserTransformer, columnMap?: {
         [key: string]: string;
     });
     find(field: string, value: string, ip?: string): Promise<Models.UserEntity | null>;
