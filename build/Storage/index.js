@@ -23,11 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Storages = void 0;
+exports.Storage = void 0;
 const JavascriptSDK = __importStar(require("@ssofy/javascript-sdk"));
-var Storages;
-(function (Storages) {
-    Storages.NullStorage = JavascriptSDK.NullStorage;
-    Storages.MemoryStorage = JavascriptSDK.MemoryStorage;
-    Storages.FileStorage = JavascriptSDK.FileStorage;
-})(Storages = exports.Storages || (exports.Storages = {}));
+var Storage;
+(function (Storage) {
+    Storage.NullStorage = JavascriptSDK.NullStorage;
+    Storage.MemoryStorage = JavascriptSDK.MemoryStorage;
+    Storage.FileStorage = JavascriptSDK.FileStorage;
+})(Storage = exports.Storage || (exports.Storage = {}));
