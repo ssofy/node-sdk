@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.4.3 - 2023-09-10
+
+* Fixed the column mapping issue with UserRepository and SocialLinkRepository.
+* Twilio Notifier exception handling.
+* Added missing Notifier exports.
+* Fixes.
+
 ## 2.4.2 - 2023-08-28
 
 * Renamed `Storages` namespace to singular form `Storage`. 
