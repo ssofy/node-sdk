@@ -29,4 +29,8 @@ export declare class UserRepository implements Repositories.UserRepository {
     protected makeUserItem(userAttributes: any): Datasource.Item;
     protected makePassword(password: string): string;
     protected tokenStorageKey(token: string): string;
+    protected objectGet(obj: any, column: string, alternative?: any): any;
+    protected objectSet(obj: any, column: string, value: any): void;
+    protected objectDelete(obj: any, column: string): void;
+    protected column(column: string): string;
 }

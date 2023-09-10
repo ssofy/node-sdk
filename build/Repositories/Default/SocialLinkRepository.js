@@ -17,29 +17,42 @@ class SocialLinkRepository {
         this.columns = columnMap;
     }
     getUserId(provider, identifier) {
-        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             let criteria = {};
-            criteria[(_a = this.columns.provider) !== null && _a !== void 0 ? _a : 'provider'] = provider;
-            criteria[(_b = this.columns.identifier) !== null && _b !== void 0 ? _b : 'identifier'] = identifier;
+            this.objectSet(criteria, 'provider', provider);
+            this.objectSet(criteria, 'identifier', identifier);
             const links = yield this.connection.query(this.schema, criteria);
             if (links.length <= 0) {
                 return null;
             }
-            return links[0][(_c = this.columns.user_id) !== null && _c !== void 0 ? _c : 'user_id'];
+            return this.objectGet(links[0], 'user_id');
         });
     }
     link(provider, identifier, userId) {
-        var _a, _b, _c, _d, _e, _f;
         const item = {};
-        item[(_a = this.columns.provider) !== null && _a !== void 0 ? _a : 'provider'] = provider;
-        item[(_b = this.columns.identifier) !== null && _b !== void 0 ? _b : 'identifier'] = identifier;
-        item[(_c = this.columns.user_id) !== null && _c !== void 0 ? _c : 'user_id'] = userId;
+        this.objectSet(item, 'provider', provider);
+        this.objectSet(item, 'identifier', identifier);
+        this.objectSet(item, 'user_id', userId);
         let criteria = {};
-        criteria[(_d = this.columns.provider) !== null && _d !== void 0 ? _d : 'provider'] = provider;
-        criteria[(_e = this.columns.identifier) !== null && _e !== void 0 ? _e : 'identifier'] = identifier;
-        criteria[(_f = this.columns.user_id) !== null && _f !== void 0 ? _f : 'user_id'] = userId;
+        this.objectSet(criteria, 'provider', provider);
+        this.objectSet(criteria, 'identifier', identifier);
+        this.objectSet(criteria, 'user_id', userId);
         return this.connection.upsert(this.schema, criteria, item);
+    }
+    objectGet(obj, column, alternative) {
+        var _a;
+        const realColumn = this.column(column);
+        if (!obj.hasOwnProperty(realColumn)) {
+            return alternative;
+        }
+        return (_a = obj[realColumn]) !== null && _a !== void 0 ? _a : alternative;
+    }
+    objectSet(obj, column, value) {
+        obj[this.column(column)] = value;
+    }
+    column(column) {
+        var _a;
+        return (_a = this.columns[column]) !== null && _a !== void 0 ? _a : column;
     }
 }
 exports.SocialLinkRepository = SocialLinkRepository;

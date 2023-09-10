@@ -47,7 +47,7 @@ class UserRepository {
     find(field, value, ip) {
         return __awaiter(this, void 0, void 0, function* () {
             let criteria = {};
-            criteria[field] = value;
+            this.objectSet(criteria, field, value);
             const users = yield this.connection.query(this.schema, criteria);
             if (users.length <= 0) {
                 return null;
@@ -56,10 +56,9 @@ class UserRepository {
         });
     }
     findById(id, ip) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             let criteria = {};
-            criteria[(_a = this.columns.id) !== null && _a !== void 0 ? _a : 'id'] = id;
+            this.objectSet(criteria, 'id', id);
             const users = yield this.connection.query(this.schema, criteria);
             if (users.length <= 0) {
                 return null;
@@ -107,24 +106,23 @@ class UserRepository {
     create(user, password, ip) {
         return __awaiter(this, void 0, void 0, function* () {
             const userAttributes = user;
-            delete userAttributes.id;
+            this.objectDelete(userAttributes, 'id');
             if (!password) {
                 password = helpers_1.Helpers.randomString(16);
             }
-            userAttributes.password = this.makePassword(password);
+            this.objectSet(userAttributes, 'password', this.makePassword(password));
             const item = this.makeUserItem(userAttributes);
             yield this.connection.insert(this.schema, item);
             return this.userTransformer.transform(item);
         });
     }
     update(user, ip) {
-        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const userAttributes = user;
             let criteria = {};
-            criteria[(_a = this.columns.id) !== null && _a !== void 0 ? _a : 'id'] = user.id;
+            this.objectSet(criteria, 'id', user.id);
             let item = this.makeUserItem(userAttributes);
-            delete item[(_b = this.columns.id) !== null && _b !== void 0 ? _b : 'id'];
+            this.objectDelete(item, 'id');
             yield this.connection.update(this.schema, criteria, item);
             return this.userTransformer.transform(item);
         });
@@ -145,45 +143,42 @@ class UserRepository {
         });
     }
     verifyPassword(userId, password, ip) {
-        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             let criteria = {};
-            criteria[(_a = this.columns.id) !== null && _a !== void 0 ? _a : 'id'] = userId;
+            this.objectSet(criteria, 'id', userId);
             const users = yield this.connection.query(this.schema, criteria);
             if (users.length <= 0) {
                 return false;
             }
             const user = users[0];
             if (!password) {
-                return user[(_b = this.columns.password) !== null && _b !== void 0 ? _b : 'password'] === null;
+                return this.objectGet(user, 'password') === null;
             }
-            return user[(_c = this.columns.password) !== null && _c !== void 0 ? _c : 'password'] === this.makePassword(password);
+            return this.objectGet(user, 'password') === this.makePassword(password);
         });
     }
     updatePassword(userId, password, ip) {
-        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let criteria = {};
-            criteria[(_a = this.columns.id) !== null && _a !== void 0 ? _a : 'id'] = userId;
+            this.objectSet(criteria, 'id', userId);
             let item = {};
-            item[(_b = this.columns.password) !== null && _b !== void 0 ? _b : 'password'] = this.makePassword(password);
+            this.objectSet(item, 'password', this.makePassword(password));
             return this.connection.update(this.schema, criteria, item);
         });
     }
     makeUserItem(userAttributes) {
-        var _a, _b, _c, _d, _e, _f;
-        if (!userAttributes[(_a = this.columns['name']) !== null && _a !== void 0 ? _a : 'name'] || userAttributes[(_b = this.columns['name']) !== null && _b !== void 0 ? _b : 'name'].trim() === '') {
-            userAttributes[(_c = this.columns['name']) !== null && _c !== void 0 ? _c : 'name'] = (((_d = userAttributes.given_name) === null || _d === void 0 ? void 0 : _d.toString().trim()) + ' ' + ((_e = userAttributes.family_name) === null || _e === void 0 ? void 0 : _e.toString().trim())).trim();
+        if (this.objectGet(userAttributes, 'name', '').trim() === '') {
+            this.objectSet(userAttributes, 'name', (this.objectGet(userAttributes, 'given_name', '').trim() + ' ' + this.objectGet(userAttributes, 'family_name', '')).trim());
         }
         let item = Object.keys(userAttributes).reduce((acc, key) => {
             if (this.columns[key]) {
-                acc[this.columns[key]] = userAttributes[key];
+                this.objectSet(acc, key, userAttributes[key]);
             }
             return acc;
         }, {});
         if (this.columns.metadata) {
-            item[this.columns.metadata] = userAttributes;
-            delete item[this.columns.metadata][(_f = this.columns.password) !== null && _f !== void 0 ? _f : 'password'];
+            this.objectSet(item, 'metadata', userAttributes);
+            this.objectDelete(this.objectGet(item, 'metadata'), 'password');
         }
         return item;
     }
@@ -194,6 +189,24 @@ class UserRepository {
     }
     tokenStorageKey(token) {
         return `user:token:${token}`;
+    }
+    objectGet(obj, column, alternative) {
+        var _a;
+        const realColumn = this.column(column);
+        if (!obj.hasOwnProperty(realColumn)) {
+            return alternative;
+        }
+        return (_a = obj[realColumn]) !== null && _a !== void 0 ? _a : alternative;
+    }
+    objectSet(obj, column, value) {
+        obj[this.column(column)] = value;
+    }
+    objectDelete(obj, column) {
+        delete obj[this.column(column)];
+    }
+    column(column) {
+        var _a;
+        return (_a = this.columns[column]) !== null && _a !== void 0 ? _a : column;
     }
 }
 exports.UserRepository = UserRepository;

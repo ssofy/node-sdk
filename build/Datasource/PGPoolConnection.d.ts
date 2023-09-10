@@ -1,7 +1,7 @@
 import { Datasource } from '.';
 import { Connection } from './Connection';
 import { Pool } from 'pg';
-export declare class PGConnection extends Connection {
+export declare class PGPoolConnection extends Connection {
     protected pool: Pool;
     constructor(pool: Pool);
     query(schema: string, criteria: Datasource.Criteria): Promise<Datasource.Item[]>;

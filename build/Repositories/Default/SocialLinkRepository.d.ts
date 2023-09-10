@@ -11,4 +11,7 @@ export declare class SocialLinkRepository implements Repositories.SocialLinkRepo
     });
     getUserId(provider: string, identifier: string): Promise<string | null>;
     link(provider: string, identifier: string, userId: string): Promise<void>;
+    protected objectGet(obj: any, column: string, alternative?: any): any;
+    protected objectSet(obj: any, column: string, value: any): void;
+    protected column(column: string): string;
 }

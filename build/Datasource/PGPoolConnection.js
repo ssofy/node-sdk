@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PGConnection = void 0;
+exports.PGPoolConnection = void 0;
 const Connection_1 = require("./Connection");
-class PGConnection extends Connection_1.Connection {
+class PGPoolConnection extends Connection_1.Connection {
     constructor(pool) {
         super();
         this.pool = pool;
@@ -74,4 +74,4 @@ class PGConnection extends Connection_1.Connection {
         });
     }
 }
-exports.PGConnection = PGConnection;
+exports.PGPoolConnection = PGPoolConnection;

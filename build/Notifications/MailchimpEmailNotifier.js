@@ -9,29 +9,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TwilioSMSNotifier = void 0;
+exports.MailchimpEmailNotifier = void 0;
 const _1 = require(".");
 const Notifier_1 = require("./Notifier");
-class TwilioSMSNotifier extends Notifier_1.Notifier {
-    constructor(twilio, sender, templates = [], vars = {}) {
-        super(_1.Notifications.Channel.SMS, sender, templates, vars);
-        this.client = twilio;
+class MailchimpEmailNotifier extends Notifier_1.Notifier {
+    constructor(mailchimp, sender, templates = [], vars = {}) {
+        super(_1.Notifications.Channel.EMAIL, sender, templates, vars);
+        this.mailchimp = mailchimp;
     }
     notify(receiver, template, data) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const message = yield this.render(template, data);
+            const messageContent = yield this.render(template, data);
+            const message = {
+                html: messageContent,
+                subject: (_a = this.vars.subject) !== null && _a !== void 0 ? _a : 'Verification Code',
+                from_email: this.sender,
+                to: [
+                    {
+                        email: receiver
+                    }
+                ]
+            };
             try {
-                const response = yield this.client.messages.create({
-                    body: message,
-                    from: this.sender,
-                    to: receiver
+                const response = yield this.mailchimp.messages.send({
+                    message,
                 });
-                console.debug(`Message sent using Twilio with SID: ${response.sid}`);
+                console.debug('Email sent successfully using Mandrill:', response.data[0]);
             }
             catch (error) {
-                console.error('Error sending SMS using Twilio:', error);
+                console.error('Error sending email using Mandrill:', error);
             }
         });
     }
 }
-exports.TwilioSMSNotifier = TwilioSMSNotifier;
+exports.MailchimpEmailNotifier = MailchimpEmailNotifier;
