@@ -31,7 +31,7 @@ export class UserRepository implements Repositories.UserRepository {
 
     async find(field: string, value: string, ip?: string): Promise<Models.UserEntity | null> {
         let criteria: Datasource.Criteria = {};
-        criteria[field] = value;
+        this.objectSet(criteria, field, value);
 
         const users = await this.connection.query(this.schema, criteria);
         if (users.length <= 0) {
@@ -43,7 +43,7 @@ export class UserRepository implements Repositories.UserRepository {
 
     async findById(id: string, ip?: string): Promise<Models.UserEntity | null> {
         let criteria: Datasource.Criteria = {};
-        criteria[this.columns.id ?? 'id'] = id;
+        this.objectSet(criteria, 'id', id);
 
         const users = await this.connection.query(this.schema, criteria);
         if (users.length <= 0) {
@@ -95,13 +95,13 @@ export class UserRepository implements Repositories.UserRepository {
     async create(user: Models.UserEntity, password?: string, ip?: string): Promise<Models.UserEntity> {
         const userAttributes = <any>user;
 
-        delete userAttributes.id;
+        this.objectDelete(userAttributes, 'id');
 
         if (!password) {
             password = Helpers.randomString(16);
         }
 
-        userAttributes.password = this.makePassword(password);
+        this.objectSet(userAttributes, 'password', this.makePassword(password));
 
         const item = this.makeUserItem(userAttributes);
         await this.connection.insert(this.schema, item);
@@ -113,10 +113,10 @@ export class UserRepository implements Repositories.UserRepository {
         const userAttributes: any = user;
 
         let criteria: Datasource.Criteria = {};
-        criteria[this.columns.id ?? 'id'] = user.id;
+        this.objectSet(criteria, 'id', user.id);
 
         let item = this.makeUserItem(userAttributes);
-        delete item[this.columns.id ?? 'id'];
+        this.objectDelete(item, 'id');
 
         await this.connection.update(this.schema, criteria, item);
 
@@ -140,7 +140,7 @@ export class UserRepository implements Repositories.UserRepository {
 
     async verifyPassword(userId: string, password?: string, ip?: string): Promise<boolean> {
         let criteria: Datasource.Criteria = {};
-        criteria[this.columns.id ?? 'id'] = userId;
+        this.objectSet(criteria, 'id', userId);
 
         const users = await this.connection.query(this.schema, criteria);
         if (users.length <= 0) {
@@ -150,37 +150,37 @@ export class UserRepository implements Repositories.UserRepository {
         const user = users[0];
 
         if (!password) {
-            return user[this.columns.password ?? 'password'] === null;
+            return this.objectGet(user, 'password') === null;
         }
 
-        return user[this.columns.password ?? 'password'] === this.makePassword(password);
+        return this.objectGet(user, 'password') === this.makePassword(password);
     }
 
     async updatePassword(userId: string, password: string, ip?: string): Promise<void> {
         let criteria: Datasource.Criteria = {};
-        criteria[this.columns.id ?? 'id'] = userId;
+        this.objectSet(criteria, 'id', userId);
 
         let item: Datasource.Item = {};
-        item[this.columns.password ?? 'password'] = this.makePassword(password);
+        this.objectSet(item, 'password', this.makePassword(password));
 
         return this.connection.update(this.schema, criteria, item);
     }
 
     protected makeUserItem(userAttributes: any): Datasource.Item {
-        if (!userAttributes[this.columns['name'] ?? 'name'] || userAttributes[this.columns['name'] ?? 'name'].trim() === '') {
-            userAttributes[this.columns['name'] ?? 'name'] = (userAttributes.given_name?.toString().trim() + ' ' + userAttributes.family_name?.toString().trim()).trim();
+        if (this.objectGet(userAttributes, 'name', '').trim() === '') {
+            this.objectSet(userAttributes, 'name', (this.objectGet(userAttributes, 'given_name', '').trim() + ' ' + this.objectGet(userAttributes, 'family_name', '')).trim());
         }
 
         let item: Datasource.Item = Object.keys(userAttributes).reduce((acc: Datasource.Item, key: string) => {
             if (this.columns[key]) {
-                acc[this.columns[key]] = userAttributes[key as keyof Models.UserEntity];
+                this.objectSet(acc, key, userAttributes[key]);
             }
             return acc;
         }, {} as Datasource.Item);
 
         if (this.columns.metadata) {
-            item[this.columns.metadata] = userAttributes;
-            delete item[this.columns.metadata][this.columns.password ?? 'password'];
+            this.objectSet(item, 'metadata', userAttributes);
+            this.objectDelete(this.objectGet(item, 'metadata'), 'password');
         }
 
         return item;
@@ -194,5 +194,27 @@ export class UserRepository implements Repositories.UserRepository {
 
     protected tokenStorageKey(token: string): string {
         return `user:token:${token}`;
+    }
+
+    protected objectGet(obj: any, column: string, alternative?: any): any {
+        const realColumn = this.column(column);
+
+        if (!obj.hasOwnProperty(realColumn)) {
+            return alternative;
+        }
+
+        return obj[realColumn] ?? alternative;
+    }
+
+    protected objectSet(obj: any, column: string, value: any): void {
+        obj[this.column(column)] = value;
+    }
+
+    protected objectDelete(obj: any, column: string): void {
+        delete obj[this.column(column)];
+    }
+
+    protected column(column: string): string {
+        return this.columns[column] ?? column;
     }
 }
