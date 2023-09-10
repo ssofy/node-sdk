@@ -1,6 +1,6 @@
 {
   "name": "@ssofy/node-sdk",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Official SSOfy Node.js SDK.",
   "keywords": [
     "ssofy",
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.6.4",
+    "@mailchimp/mailchimp_transactional": "^1.0.50",
     "@prisma/client": "^2.30.3",
     "@redis/client": "^1.5.9",
     "@sendgrid/mail": "^7.7.0",
