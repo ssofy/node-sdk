@@ -2,7 +2,7 @@ SSOfy Node.js SDK
 =============
 #### Official [SSOfy](https://www.ssofy.com) Node.js SDK.
 
-Read the full [documentation](https://www.ssofy.com/docs/SDK/NodeJs/Installation/) at SSOfy Knowledge Base.
+Read the full [documentation](https://www.ssofy.com/docs/SDK/NodeJs) at SSOfy Knowledge Base.
 
 <img src="docs/img/logo.png"/>
 
@@ -28,7 +28,7 @@ and interact with SSOfy's API.
 
 - **Diverse Datasource Support:** Connect default repositories to different datasources, including MySQL, Postgres, DynamoDB, MongoDB, and ORMs (Prisma, Sequelize, and Mongoose).
 
-- **Comprehensive Notifiers:** Communicate using SMS platforms (Twilio, Vonage) and email services (SendGrid, Mandrill, SES, etc.).
+- **Comprehensive Notifiers:** Communicate using SMS platforms (Twilio, Vonage) and email services (SendGrid, Mailchimp (Mandrill), SES, etc.).
 
 - **Event Handling:** Handle events seamlessly with support for Node's EventEmitter and Redis Pub/Sub.
 
