@@ -2,7 +2,7 @@ import {Datasource} from '.';
 import {Connection} from './Connection';
 import {Pool} from 'pg';
 
-export class PGConnection extends Connection {
+export class PGPoolConnection extends Connection {
     protected pool: Pool;
 
     constructor(pool: Pool) {
