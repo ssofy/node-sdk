@@ -18,14 +18,15 @@ export class TwilioSMSNotifier extends Notifier {
     async notify(receiver: string, template: string, data?: any): Promise<void> {
         const message = await this.render(template, data);
 
-        await this.client.messages.create({
-            body: message,
-            from: this.sender,
-            to: receiver
-        }).then(message => {
-            console.debug(`Message sent using Twilio with SID: ${message.sid}`);
-        }).catch(error => {
+        try {
+            const response = await this.client.messages.create({
+                body: message,
+                from: this.sender,
+                to: receiver
+            });
+            console.debug(`Message sent using Twilio with SID: ${response.sid}`);
+        } catch (error) {
             console.error('Error sending SMS using Twilio:', error);
-        });
+        }
     }
 }
